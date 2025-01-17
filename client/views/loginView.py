@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import messagebox
 from controllers.userController import UserController
 from views.hocVienView import HocVienView
+from client.views.GiaoVienView import GiaoVienView
+
 
 class LoginView:
     _instance = None
@@ -59,4 +61,7 @@ class LoginView:
                 hocVienView.initView()
                 hocVienView.showView()
             else:
-                messagebox.showerror("Thất bại", "Sai thông tin đăng nhập!")
+                # messagebox.showerror("Thất bại", "Sai thông tin đăng nhập!")
+                giaoVienView = GiaoVienView.getInstance()
+                giaoVienView.initView()
+                giaoVienView.showView()
