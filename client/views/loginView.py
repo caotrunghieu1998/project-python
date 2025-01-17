@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from controllers.userController import UserController
 from views.hocVienView import HocVienView
-from client.views.GiaoVienView import GiaoVienView
+from views.GiaoVienView import GiaoVienView
 
 
 class LoginView:

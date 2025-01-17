@@ -1,6 +1,6 @@
 from tkinter import *
 
-from client.controllers.GiaoVienController import GiaoVienController
+from controllers.GiaoVienController import GiaoVienController
 
 
 class GiaoVienView:
