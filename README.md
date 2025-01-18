@@ -16,3 +16,12 @@ https://drive.google.com/file/d/1JRsECWa73awB68qUpDCuOwjRlBBkxDvo/view?usp=drive
 
 - Link CÁC THƯ VIỆN CẦN CÀI CỦA PROJECT (khuyến khích xài python 3. trở lên)
 https://docs.google.com/spreadsheets/d/1Z6IuTPWNY06wjrdVwLKmQpzXtAue8__CctQcMWpjVu4/edit?gid=905343195#gid=905343195
+
+- My SQL Online
+- Link: https://www.phpmyadmin.co/
+- Các thông tin:
+    - Server: sql5.freemysqlhosting.net	
+    - Name: sql5758315	
+    - Username: sql5758315	
+    - Password: KD6vKqAYH5	
+    - Port number: 3306	
