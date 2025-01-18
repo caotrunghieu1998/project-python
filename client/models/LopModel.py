@@ -55,10 +55,43 @@ class LopModel(ConnectDB):
         finally:
             self.close()
 
-    def update_item(self, index, item):
-        """Cập nhật thông tin khoa."""
-        print("Khoa")
+    def update_item(self, ma_lop, item):
+        """Thêm dữ liệu mới vào CSDL."""
+        db = self.connect()
+        cursor = db.cursor()
+        
+        try:
+            query = f"""
+            UPDATE {self.NAME_TABLE_LOP}
+            SET TENLOP = %s, TRGLOP = %s, SISO = %s, MAGVCN = %s
+            WHERE MALOP = %s
+            """
 
-    def delete_item(self, index):
-        """Xóa khoa."""
-        print("Khoa")
+            cursor.execute(query, (item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"], ma_lop))
+            db.commit()
+            print(f"Cập nhật thành công lớp: {ma_lop}")
+        except Exception as e:
+            db.rollback()
+            print(f"Lỗi khi cập nhật dữ liệu: {e}")
+        finally:
+            self.close()
+
+    def delete_item(self, ma_lop):
+        """Xoá dữ liệu CSDL."""
+        db = self.connect()
+        cursor = db.cursor()
+        
+        try:
+            query = f"""
+            DELETE FROM {self.NAME_TABLE_LOP}
+            WHERE MALOP = %s
+            """
+
+            cursor.execute(query, ( ma_lop))
+            db.commit()
+            print(f"Xoá thành công lớp: {ma_lop}")
+        except Exception as e:
+            db.rollback()
+            print(f"Lỗi khi xoá dữ liệu: {e}")
+        finally:
+            self.close()
