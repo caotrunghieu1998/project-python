@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from models.LopModel import LopModel
-from client.views.lopView2 import LopView
+from client.views.lopView import LopView
 
 class LopController:
     _instance = None
