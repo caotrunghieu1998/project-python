@@ -75,12 +75,17 @@ class LopView:
         self._tree.column("MAGVCN", width=150, anchor="w")
 
     #get
-    def get_selected_item(self):
-        """Trả về item được chọn."""
-        selected = self._tree.selection()
-        if selected:
-            return self._tree.index(selected[0])
-        return self._tree
+    def get_selected_ma_lop(self):
+        """Trả về Mã Lớp (MA_LOP) của item được chọn."""
+        selected_items = self._tree.selection()
+        ma_lop = None
+        
+        if selected_items:  
+            first_item = selected_items[0]  
+            values = self._tree.item(first_item, "values")  
+            if values:  
+                ma_lop = values[0]
+        return ma_lop
 
     def get_input_values(self):
         """Lấy dữ liệu từ các ô nhập liệu."""
@@ -103,7 +108,7 @@ class LopView:
     def load_list(self, data):
         """Cập nhật Treeview với dữ liệu."""
         for item in self._tree.get_children():
-            self._tree.delete(item, END)
+            self._tree.delete(item)
 
         for item in data:
             self._tree.insert("", END, values=(item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))

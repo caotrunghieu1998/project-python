@@ -19,7 +19,7 @@ class LopController:
         self._view.buttonAdd["command"] = self.add_item
         self._view.buttonEdit["command"] = self.update_item
         self._view.buttonRemove["command"] = self.delete_item
-        self._view.tree.bind('<<TreeviewSelect>>', self.get_select_tree_view)
+        self._view.tree.bind('<<TreeviewSelect>>', self.get_selected_item)
         
         self.load_data()
             
@@ -40,35 +40,27 @@ class LopController:
 
     def update_item(self):
         """Chỉnh sửa dữ liệu"""
-        index = self._view.get_selected_item()
-        if index is None:
+        ma_lop = self._view.get_selected_ma_lop()
+        if ma_lop is None:
             messagebox.showerror("Lỗi", "Vui lòng chọn một dòng để sửa.")
             return
 
         item = self._view.get_input_values()
-        self._model.update_item(index, item)
+        self._model.update_item(ma_lop, item)
         self._view.clear_inputs()
+        self.load_data()
 
     def delete_item(self):
         """Xoá dữ liệu"""
-        index = self._view.get_selected_item()
-        if index is None:
+        ma_lop = self._view.get_selected_ma_lop()
+        if ma_lop is None:
             messagebox.showerror("Lỗi", "Vui lòng chọn một dòng để xóa.")
             return
 
-        self._model.delete_item(index)
+        self._model.delete_item(ma_lop)
+        self.load_data()
         
-    def get_select_tree_view(self, event=None):
+    def get_selected_item(self, event=None):
         """Hàm xử lý khi người dùng chọn một mục trong Treeview."""
-        selected_items = self._view.tree.selection()  # Lấy danh sách các item được chọn
-        selected_data = []
-
-        # Duyệt qua từng item được chọn để lấy dữ liệu
-        for item in selected_items:
-            values = self._view.tree.item(item, "values")  # Lấy giá trị của từng item
-            selected_data.append(values)
-
-        # Hiển thị dữ liệu đã chọn trong console (hoặc xử lý tùy ý)
-        if selected_data:
-            for data in selected_data:
-                print(data)
+        ma_lop = self._view.get_selected_ma_lop()
+        
