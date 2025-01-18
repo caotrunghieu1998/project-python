@@ -14,7 +14,12 @@ class LopView:
     def __init__(self):
         self.tkRoot = tk.Tk()
         self._ds = []
-
+        self._tree = ttk.Treeview(None)
+        
+    @property
+    def tree(self):
+        return self._tree
+    
     def initView(self):
         root = self.tkRoot
 
@@ -50,29 +55,29 @@ class LopView:
 
     def create_treeview(self):
         """Tạo bảng Treeview."""
-        self.tree = ttk.Treeview(
+        self._tree = ttk.Treeview(
             self.tkRoot, columns=("MALOP", "TENLOP", "TRGLOP", "SISO", "MAGVCN"), show="headings"
         )
-        self.tree.pack(fill="both", expand=True, padx=10, pady=10)
+        self._tree.pack(fill="both", expand=True, padx=10, pady=10)
 
-        self.tree.heading("MALOP", text="Mã Lớp")
-        self.tree.heading("TENLOP", text="Tên Lớp")
-        self.tree.heading("TRGLOP", text="Trưởng Lớp")
-        self.tree.heading("SISO", text="Sỉ Số")
-        self.tree.heading("MAGVCN", text="Trưởng Lớp")
+        self._tree.heading("MALOP", text="Mã Lớp")
+        self._tree.heading("TENLOP", text="Tên Lớp")
+        self._tree.heading("TRGLOP", text="Trưởng Lớp")
+        self._tree.heading("SISO", text="Sỉ Số")
+        self._tree.heading("MAGVCN", text="Trưởng Lớp")
 
-        self.tree.column("MALOP", width=100, anchor="center")
-        self.tree.column("TENLOP", width=200, anchor="w")
-        self.tree.column("TRGLOP", width=200, anchor="w")
-        self.tree.column("SISO", width=150, anchor="center")
-        self.tree.column("MAGVCN", width=150, anchor="w")
+        self._tree.column("MALOP", width=100, anchor="center")
+        self._tree.column("TENLOP", width=200, anchor="w")
+        self._tree.column("TRGLOP", width=200, anchor="w")
+        self._tree.column("SISO", width=150, anchor="center")
+        self._tree.column("MAGVCN", width=150, anchor="w")
 
     def get_selected_item(self):
         """Trả về item được chọn."""
-        selected = self.tree.selection()
+        selected = self._tree.selection()
         if selected:
-            return self.tree.index(selected[0])
-        return None
+            return self._tree.index(selected[0])
+        return self._tree
 
     def get_input_values(self):
         """Lấy dữ liệu từ các ô nhập liệu."""
@@ -83,22 +88,6 @@ class LopView:
             "SISO": self.siso.get().strip(),
             "MAGVCN": self.ma_gvcn.get().strip(),
         }
-
-    def clear_inputs(self):
-        """Xóa nội dung các ô nhập liệu."""
-        self.ma_lop.delete(0, tk.END)
-        self.ten_lop.delete(0, tk.END)
-        self.trg_lop.delete(0, tk.END)
-        self.siso.delete(0, tk.END)
-        self.ma_gvcn.delete(0, tk.END)
-
-    def refresh_treeview(self):
-        """Cập nhật Treeview với dữ liệu hiện tại."""
-        for item in self.tree.get_children():
-            self.tree.delete(item)
-
-        for item in self._ds:
-            self.tree.insert("", tk.END, values=(item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))
-    
+        
     def showView(self):
         self.tkRoot.mainloop()

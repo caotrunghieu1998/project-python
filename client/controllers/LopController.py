@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 from models.LopModel import LopModel
-from client.views.lopView import LopView
+from views.lopView import LopView
 
 class LopController:
     _instance = None
@@ -16,6 +16,7 @@ class LopController:
     def __init__(self):
         self._model = LopModel.getInstance()
         self._view = LopView.getInstance()
+        self._tree = LopView.tree
         
     def initView(self):
         return self._view.initView()
@@ -51,11 +52,11 @@ class LopController:
     
     def refresh_treeview(self):
         """Cập nhật Treeview với dữ liệu hiện tại."""
-        for item in self.tree.get_children():
-            self.tree.delete(item)
+        for item in self._tree.get_children():
+            self._tree.delete(item)
 
         for item in self.data:
-            self.tree.insert("", tk.END, values=(item["MAKHOA"], item["TENKHOA"], item["NGTLAP"], item["TRGKHOA"]))
+            self._tree.insert("", tk.END, values=(item["MAKHOA"], item["TENKHOA"], item["NGTLAP"], item["TRGKHOA"]))
     
     def showView(self):
         return self._view.showView()
