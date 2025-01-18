@@ -1,4 +1,5 @@
 from models.baseData import dataUser
+from models.connectDB import ConnectDB
 
 class User:
     def __init__(self, ID: int, NAME: str, EMAIL: str, PASSWORD: str, ROLE: str):
@@ -49,7 +50,7 @@ class User:
     def ROLE(self, ROLE):
         self._ROLE = ROLE
 
-class UserModel:
+class UserModel(ConnectDB):
     _instance = None
     
     @classmethod
@@ -60,10 +61,43 @@ class UserModel:
         return UserModel._instance
     
     def __init__(self):
-        pass
+        super().__init__()
 
-    def login(self, email: str, password: str):
-        for user in dataUser:
-            if user["EMAIL"] == email and user["PASSWORD"] == password:
-                return User(user["ID"], user["NAME"], user["EMAIL"], user["PASSWORD"], user["ROLE"])
+    def convertDataTableUserToUserModel(self, data):
+        return User(data[0], data[1], data[2], data[3], data[4])
+
+    def getListUser(self):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM {self.NAME_TABLE_USER}")
+        data = cursor.fetchall()
+        self.close(db)
+        return [self.convertDataTableUserToUserModel(row) for row in data] 
+
+    def getUserByLogin(self, email: str, password: str):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute(f"SELECT * FROM {self.NAME_TABLE_USER} WHERE EMAIL = %s AND PASSWORD = %s", (email, password))
+        data = cursor.fetchone()
+        self.close()
+        if data:
+            return self.convertDataTableUserToUserModel(data)
         return None
+    
+    # Update thông tin của user
+    def update_user(self, user_id, name, email, password, role):
+        db = self.connect()
+        cursor = db.cursor()
+        sql = f"UPDATE {self.NAME_TABLE_USER} SET NAME = %s, EMAIL = %s, PASSWORD = %s, ROLE = %s WHERE ID = %s"
+        values = (name, email, password, role, user_id)
+        cursor.execute(sql, values)
+        db.commit()
+        self.close()
+
+    # Xóa 1 user
+    def delete_user(self, user_id):
+        db = self.connect()
+        cursor = db.cursor()
+        cursor.execute(f"DELETE FROM {self.NAME_TABLE_USER} WHERE ID = %s", (user_id,))
+        db.commit()
+        self.close()

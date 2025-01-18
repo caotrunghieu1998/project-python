@@ -14,5 +14,5 @@ class UserController:
         self._userModel = UserModel.getInstance()
 
     def login(self, email: str, password: str):
-        return self._userModel.login(email, password)
+        return self._userModel.getUserByLogin(email, password)
 
