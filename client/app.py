@@ -11,4 +11,5 @@ from controllers.LopController import LopController
 if __name__ == '__main__':
     c = LopController.getInstance()
     c.initView()
+    c.load_data()
     c.showView()

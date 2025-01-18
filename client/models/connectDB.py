@@ -10,6 +10,7 @@ class ConnectDB:
     
     # Field Table name
     NAME_TABLE_USER = "user"
+    NAME_TABLE_LOP = "lop"
 
     def __init__(self):
         self.connection = None

@@ -15,11 +15,16 @@ class LopController:
 
     def __init__(self):
         self._model = LopModel.getInstance()
-        self._view = LopView.getInstance()
+        self._view = LopView.getInstance(self._model)
         self._tree = LopView.tree
         
     def initView(self):
-        return self._view.initView()
+        return self._view.initView(self._model)
+    
+    def load_data(self):
+        """Lấy dữ liệu từ model và cập nhật view."""
+        data = self._model.get_list_data()
+        self._view.refresh_treeview(data)
 
     def add_item(self):
         item = self._view.get_input_values()
@@ -27,7 +32,7 @@ class LopController:
             messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ thông tin.")
             return
         self._model.add_item(item)
-        self._view.refresh_treeview(self._model.get_data())
+        self._view.refresh_treeview(self._model.get_list_data())
         self._view.clear_inputs()
 
     def edit_item(self):
@@ -38,7 +43,7 @@ class LopController:
 
         item = self._view.get_input_values()
         self._model.update_item(index, item)
-        self._view.refresh_treeview(self._model.get_data())
+        self._view.refresh_treeview(self._model.get_list_data())
         self._view.clear_inputs()
 
     def delete_item(self):
@@ -48,15 +53,10 @@ class LopController:
             return
 
         self._model.delete_item(index)
-        self._view.refresh_treeview(self._model.get_data())
+        self._view.refresh_treeview(self._model.get_list_data())
     
     def refresh_treeview(self):
-        """Cập nhật Treeview với dữ liệu hiện tại."""
-        for item in self._tree.get_children():
-            self._tree.delete(item)
-
-        for item in self.data:
-            self._tree.insert("", tk.END, values=(item["MAKHOA"], item["TENKHOA"], item["NGTLAP"], item["TRGKHOA"]))
+        return self._view.refresh_treeview()
     
     def showView(self):
         return self._view.showView()
