@@ -19,14 +19,15 @@ class GiaoVienView:
         self.tkRoot = Tk()
         self.giaoVienController = GiaoVienController.getInstance()
 
-    def initView(self):
+    def initView(self, giaoVien):
+        self.giaoVienController.giaoVien = giaoVien
         root = self.tkRoot
 
-        root.title("Chuc nang giao vien")
+        root.title("Chức năng giáo viên")
         root.geometry("500x250")
 
         # Creating layout of login form
-        Label(root, text="Xin chao giao vien Nguyen Van A", width="300", bg="orange", fg="white").pack()
+        Label(root, text=f"Xin chào giáo viên {giaoVien[0]["HOTEN"]}", width="300", bg="orange", fg="white").pack()
 
         btnProfile = Button(root, text="Thông tin cá nhân", command=self.giaoVienController.goToProfileScreen)
         btnProfile.place(x=5, y=30, height=50, width=243)

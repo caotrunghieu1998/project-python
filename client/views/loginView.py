@@ -4,6 +4,8 @@ from controllers.userController import UserController
 from views.hocVienView import HocVienView
 from views.GiaoVienView import GiaoVienView
 
+from client.models.GiaoVienModel import GiaoVienModel
+
 
 class LoginView:
     _instance = None
@@ -53,15 +55,13 @@ class LoginView:
         if not email or not password:
             messagebox.showerror("Cảnh báo", "Hãy điền đầy đủ Email và Password!")
         else:
-            user = self.userController.login(email, password)
+            user = GiaoVienModel.getInstance().getData(email)
             if (user):
-                messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user.NAME}\"")
+                print(user[0]["MAGV"])
+                messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
-                hocVienView = HocVienView.getInstance(user)
-                hocVienView.initView()
-                hocVienView.showView()
-            else:
-                # messagebox.showerror("Thất bại", "Sai thông tin đăng nhập!")
                 giaoVienView = GiaoVienView.getInstance()
-                giaoVienView.initView()
+                giaoVienView.initView(user)
                 giaoVienView.showView()
+            else:
+                messagebox.showerror("Thất bại", "Sai thông tin đăng")

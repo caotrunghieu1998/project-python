@@ -1,6 +1,9 @@
+from client.controllers.ThongTinCaNhanController import ThongTinCaNhanController
+
 
 class GiaoVienController:
     _instance = None
+    giaoVien = None
 
     @classmethod
     def getInstance(cls):
@@ -14,6 +17,7 @@ class GiaoVienController:
 
     def goToProfileScreen(self):
         print("GiaoVienController.goToProfileScreen()")
+        ThongTinCaNhanController.getInstance().loadData(self.giaoVien[0]["MAGV"])
 
     def goToKhoaScreen(self):
         print("Khoa")
