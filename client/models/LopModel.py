@@ -30,12 +30,31 @@ class LopModel(ConnectDB):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
         cursor = db.cursor()
-        query = f"SELECT * FROM {self.NAME_TABLE_LOP}"
+        query = "SELECT * FROM {0} ORDER BY MALOP ASC".format(self.NAME_TABLE_LOP)
         cursor.execute(query)
         data = cursor.fetchall()
         self.close()
         
         return self.convert(data)
+    
+    def is_ma_lop_exist(self, ma_lop):
+        """Trả về dữ liệu mã lớp"""
+        db = self.connect()
+        cursor = db.cursor()
+        
+        try:
+            query = "SELECT * FROM {0} WHERE MALOP = %s".format(self.NAME_TABLE_LOP)
+            cursor.execute(query, (ma_lop))
+            data = cursor.fetchone()
+            if data != None:
+                return True
+            return False
+        
+        except Exception as e:
+            db.rollback()
+            print(f"Lỗi khi kiểm tra: {e}")
+        finally:
+            self.close()
     
     def add_item(self, item):
         """Thêm dữ liệu mới vào CSDL."""
@@ -43,10 +62,11 @@ class LopModel(ConnectDB):
         cursor = db.cursor()
         
         try:
-            query = f"""
-            INSERT INTO {self.NAME_TABLE_LOP} (MALOP, TENLOP, TRGLOP, SISO, MAGVCN)
-            VALUES (%s, %s, %s, %s, %s)
-            """
+            query = """
+                    INSERT INTO {0} (MALOP, TENLOP, TRGLOP, SISO, MAGVCN)
+                    VALUES (%s, %s, %s, %s, %s)
+                    """.format(self.NAME_TABLE_LOP)
+                    
             cursor.execute(query, (item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))
             db.commit()
         except Exception as e:
@@ -55,41 +75,38 @@ class LopModel(ConnectDB):
         finally:
             self.close()
 
-    def update_item(self, ma_lop, item):
+    def update_item(self, item):
         """Thêm dữ liệu mới vào CSDL."""
         db = self.connect()
         cursor = db.cursor()
         
         try:
-            query = f"""
-            UPDATE {self.NAME_TABLE_LOP}
-            SET TENLOP = %s, TRGLOP = %s, SISO = %s, MAGVCN = %s
-            WHERE MALOP = %s
-            """
+            query = """
+                    UPDATE {0}
+                    SET TENLOP = %s, TRGLOP = %s, SISO = %s, MAGVCN = %s
+                    WHERE MALOP = %s
+                    """.format(self.NAME_TABLE_LOP)
 
-            cursor.execute(query, (item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"], ma_lop))
+            cursor.execute(query, (item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"], item["MALOP"]))
             db.commit()
-            print(f"Cập nhật thành công lớp: {ma_lop}")
+            print("Cập nhật thành công lớp: {}".format(item["MALOP"]))
         except Exception as e:
             db.rollback()
             print(f"Lỗi khi cập nhật dữ liệu: {e}")
         finally:
             self.close()
 
-    def delete_item(self, ma_lop):
+    def delete_item(self, item):
         """Xoá dữ liệu CSDL."""
         db = self.connect()
         cursor = db.cursor()
         
         try:
-            query = f"""
-            DELETE FROM {self.NAME_TABLE_LOP}
-            WHERE MALOP = %s
-            """
+            query = "DELETE FROM {0} WHERE MALOP = %s".format(self.NAME_TABLE_LOP)
 
-            cursor.execute(query, ( ma_lop))
+            cursor.execute(query, (item["MALOP"]))
             db.commit()
-            print(f"Xoá thành công lớp: {ma_lop}")
+            print(f"Xoá thành công lớp: {item["MALOP"]}")
         except Exception as e:
             db.rollback()
             print(f"Lỗi khi xoá dữ liệu: {e}")
