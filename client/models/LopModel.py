@@ -33,9 +33,9 @@ class LopModel(ConnectDB):
         cursor.execute(f"SELECT * FROM {self.NAME_TABLE_LOP}")
         data = cursor.fetchall()
         print(data)
-        self.close(db)
+        self.close()
         
-        return [{"MALOP": row[0], "TENLOP": row[1], "TRGLOP": row[2], "SISO": row[3], "MAGVCN": row[4]} for row in data]
+        return self.convert(data)
     
     def add_item(self, item):
         """Thêm một khoa mới."""
