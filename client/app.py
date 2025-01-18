@@ -6,11 +6,9 @@
 #     userView.showView()
     
     
-from views.LopView import LopView
+from controllers.LopController import LopController
 
 if __name__ == '__main__':
-    userView = LopView.getInstance()
-    userView.initView()
-    userView.showView()
-    
-    
+    c = LopController.getInstance()
+    c.initView()
+    c.showView()
