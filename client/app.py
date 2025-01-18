@@ -6,10 +6,10 @@
 #     userView.showView()
     
     
-from views.Khoa.KhoaView import KhoaView
+from views.LopView import LopView
 
 if __name__ == '__main__':
-    userView = KhoaView.getInstance()
+    userView = LopView.getInstance()
     userView.initView()
     userView.showView()
     
