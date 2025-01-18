@@ -1,5 +1,5 @@
 from tkinter import messagebox
-from models.LopModel import LopModel
+from models.LopModel import LopModel, Lop
 from views.lopView import LopView
 
 class LopController:
@@ -19,18 +19,18 @@ class LopController:
         self._view.buttonAdd["command"] = self.add_item
         self._view.buttonEdit["command"] = self.update_item
         self._view.buttonRemove["command"] = self.delete_item
+        self._view.tree.bind('<<TreeviewSelect>>', self.get_select_tree_view)
         
         self.load_data()
             
     def load_data(self):
         """Hiển thị danh sách lớp"""
         data = self._model.get_list_data()
-        self._view.refresh_treeview(data)
+        self._view.load_list(data)
 
     def add_item(self):
         """Thêm dữ liệu"""
         item = self._view.get_input_values()
-        print('item', item)
         if any(value == "" for value in item.values()):
             messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ thông tin.")
             return
@@ -48,7 +48,6 @@ class LopController:
         item = self._view.get_input_values()
         self._model.update_item(index, item)
         self._view.clear_inputs()
-        self.load_data()
 
     def delete_item(self):
         """Xoá dữ liệu"""
@@ -58,8 +57,18 @@ class LopController:
             return
 
         self._model.delete_item(index)
-        self.load_data()
-    
-    def refresh_treeview(self):
-        """Làm mới dữ liệu bảng"""
-        return self._view.refresh_treeview()    
+        
+    def get_select_tree_view(self, event=None):
+        """Hàm xử lý khi người dùng chọn một mục trong Treeview."""
+        selected_items = self._view.tree.selection()  # Lấy danh sách các item được chọn
+        selected_data = []
+
+        # Duyệt qua từng item được chọn để lấy dữ liệu
+        for item in selected_items:
+            values = self._view.tree.item(item, "values")  # Lấy giá trị của từng item
+            selected_data.append(values)
+
+        # Hiển thị dữ liệu đã chọn trong console (hoặc xử lý tùy ý)
+        if selected_data:
+            for data in selected_data:
+                print(data)

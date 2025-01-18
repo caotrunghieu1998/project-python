@@ -66,7 +66,7 @@ class LopView:
         self._tree.heading("TENLOP", text="Tên Lớp")
         self._tree.heading("TRGLOP", text="Trưởng Lớp")
         self._tree.heading("SISO", text="Sỉ Số")
-        self._tree.heading("MAGVCN", text="Trưởng Lớp")
+        self._tree.heading("MAGVCN", text="Mã GVCN")
 
         self._tree.column("MALOP", width=100, anchor="center")
         self._tree.column("TENLOP", width=200, anchor="w")
@@ -100,7 +100,7 @@ class LopView:
         self.siso.delete(0, END)
         self.ma_gvcn.delete(0, END)
         
-    def refresh_treeview(self, data):
+    def load_list(self, data):
         """Cập nhật Treeview với dữ liệu."""
         for item in self._tree.get_children():
             self._tree.delete(item, END)

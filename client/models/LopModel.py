@@ -24,7 +24,7 @@ class LopModel(ConnectDB):
     
     
     def convert(self, data):
-        return [{"MALOP": row[0], "TENLOP": row[1], "TRGLOP": row[2], "SISO": row[3], "MAGVCN": row[3]} for row in data]
+        return [{"MALOP": row[0], "TENLOP": row[1], "TRGLOP": row[2], "SISO": row[3], "MAGVCN": row[4]} for row in data]
     
     def get_list_data(self):
         """Trả về danh sách dữ liệu."""
