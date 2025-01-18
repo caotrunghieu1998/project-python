@@ -30,16 +30,30 @@ class LopModel(ConnectDB):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
         cursor = db.cursor()
-        cursor.execute(f"SELECT * FROM {self.NAME_TABLE_LOP}")
+        query = f"SELECT * FROM {self.NAME_TABLE_LOP}"
+        cursor.execute(query)
         data = cursor.fetchall()
-        print(data)
         self.close()
         
         return self.convert(data)
     
     def add_item(self, item):
-        """Thêm một khoa mới."""
-        print("Khoa")
+        """Thêm dữ liệu mới vào CSDL."""
+        db = self.connect()
+        cursor = db.cursor()
+        
+        try:
+            query = f"""
+            INSERT INTO {self.NAME_TABLE_LOP} (MALOP, TENLOP, TRGLOP, SISO, MAGVCN)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(query, (item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))
+            db.commit()
+        except Exception as e:
+            db.rollback()
+            print(f"Lỗi khi thêm dữ liệu: {e}")
+        finally:
+            self.close()
 
     def update_item(self, index, item):
         """Cập nhật thông tin khoa."""

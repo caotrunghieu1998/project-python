@@ -1,67 +1,64 @@
-import tkinter as tk
 from tkinter import ttk
+from tkinter import *
 
-from models.LopModel import LopModel
 
 class LopView:
     _instance = None
-    _model = None
 
     @classmethod
-    def getInstance(cls, model: LopModel):
+    def getInstance(cls):
         if (LopView._instance):
             return LopView._instance
         LopView._instance = LopView()
-        LopView._model = model
         
         return LopView._instance
 
-    def __init__(self):
-        self.tkRoot = tk.Tk()
-        self._ds = []
+    def __init__(self, root: Tk):
+        self._root = root
         self._tree = ttk.Treeview(None)
+        self.initView()
         
     @property
     def tree(self):
         return self._tree
     
-    def initView(self, model):
-        root = self.tkRoot
+    def initView(self):
+        root = self._root
 
         root.title("Danh sách lóp")
         root.geometry("800x600")
-        self.top_frame = tk.Frame(root)
+        self.top_frame = Frame(root)
         self.top_frame.pack(fill="x", padx=10, pady=10)
 
-        self.create_input_fields()
-        self.create_buttons(model)
-        self.create_treeview()
+        self.header()
+        self.body()
 
-    def create_input_fields(self):
+    def header(self):
         """Tạo các ô nhập liệu."""
         self.ma_lop = self.add_labeled_entry("Mã Lớp:", 0)
         self.ten_lop = self.add_labeled_entry("Tên Lớp:", 2)
         self.trg_lop = self.add_labeled_entry("Trưởng Lớp:", 4)
         self.siso = self.add_labeled_entry("Sỉ Số:", 6)
         self.ma_gvcn = self.add_labeled_entry("Mã GVCN:", 8)
+        
+        self.buttonAdd = Button(self.top_frame, text="Thêm")
+        self.buttonAdd.grid(row=1, column=1, pady=10)
+        self.buttonEdit = Button(self.top_frame, text="Sửa")
+        self.buttonEdit.grid(row=1, column=3, pady=10)
+        self.buttonRemove = Button(self.top_frame, text="Xoá")
+        self.buttonRemove.grid(row=1, column=5, pady=10)
 
     def add_labeled_entry(self, label, column):
         """Thêm nhãn và ô nhập liệu."""
-        tk.Label(self.top_frame, text=label).grid(row=0, column=column)
-        entry = tk.Entry(self.top_frame, width=15)
+        Label(self.top_frame, text=label).grid(row=0, column=column)
+        entry = Entry(self.top_frame, width=15)
         entry.grid(row=0, column=column + 1, padx=5)
         return entry
 
-    def create_buttons(self, model: LopModel):
-        """Tạo các nút chức năng."""
-        tk.Button(self.top_frame, text="Thêm", command=self._model.add_item).grid(row=1, column=1, pady=10)
-        tk.Button(self.top_frame, text="Sửa", command=self._model.update_item).grid(row=1, column=3, pady=10)
-        tk.Button(self.top_frame, text="Xóa", command=self._model.delete_item).grid(row=1, column=5, pady=10)
-
-    def create_treeview(self):
+    def body(self):
         """Tạo bảng Treeview."""
         self._tree = ttk.Treeview(
-            self.tkRoot, columns=("MALOP", "TENLOP", "TRGLOP", "SISO", "MAGVCN"), show="headings"
+            self._root, columns=("MALOP", "TENLOP", "TRGLOP", "SISO", "MAGVCN"), show="headings"
         )
         self._tree.pack(fill="both", expand=True, padx=10, pady=10)
 
@@ -77,6 +74,7 @@ class LopView:
         self._tree.column("SISO", width=150, anchor="center")
         self._tree.column("MAGVCN", width=150, anchor="w")
 
+    #get
     def get_selected_item(self):
         """Trả về item được chọn."""
         selected = self._tree.selection()
@@ -96,19 +94,19 @@ class LopView:
         
     def clear_inputs(self):
         """Xóa nội dung các ô nhập liệu."""
-        self.ma_lop.delete(0, tk.END)
-        self.ten_lop.delete(0, tk.END)
-        self.trg_lop.delete(0, tk.END)
-        self.siso.delete(0, tk.END)
-        self.ma_gvcn.delete(0, tk.END)
+        self.ma_lop.delete(0, END)
+        self.ten_lop.delete(0, END)
+        self.trg_lop.delete(0, END)
+        self.siso.delete(0, END)
+        self.ma_gvcn.delete(0, END)
         
     def refresh_treeview(self, data):
         """Cập nhật Treeview với dữ liệu."""
         for item in self._tree.get_children():
-            self._tree.delete(item)
+            self._tree.delete(item, END)
 
         for item in data:
-            self._tree.insert("", tk.END, values=(item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))
+            self._tree.insert("", END, values=(item["MALOP"], item["TENLOP"], item["TRGLOP"], item["SISO"], item["MAGVCN"]))
         
     def showView(self):
-        self.tkRoot.mainloop()
+        self._root.mainloop()
