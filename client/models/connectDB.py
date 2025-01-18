@@ -2,10 +2,11 @@ import pymysql
 
 class ConnectDB:
     # Field Connect
-    _host="localhost"
-    _user="root"
-    _password=""
-    _database="python_qlgv"
+    _host="sql5.freemysqlhosting.net"
+    _user="sql5758315"
+    _password="KD6vKqAYH5"
+    _database="sql5758315"
+    _port=3306
     
     # Field Table name
     NAME_TABLE_USER = "user"
@@ -20,7 +21,8 @@ class ConnectDB:
                 host=self._host,
                 user=self._user,
                 password=self._password,
-                database=self._database
+                database=self._database,
+                port=self._port
             )
         return self.connection
 
