@@ -16,5 +16,4 @@ if __name__ == '__main__':
     m = LopModel()
     v = LopView(root)
     c = LopController(m, v)
-    
-    root.mainloop()
+    v.showView()
