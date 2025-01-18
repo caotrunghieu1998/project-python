@@ -1,7 +1,6 @@
 import tkinter as tk
 
 from client.models.GiaoVienModel import GiaoVienModel
-from client.models.connectDB import ConnectDB
 
 
 class ThongTinCaNhanView:
@@ -15,66 +14,69 @@ class ThongTinCaNhanView:
         return ThongTinCaNhanView._instance
 
     def __init__(self):
-        self.tkRoot = tk.Tk()
+        self.root = tk.Tk()
+        self.setupView()
+
+    def loadData(self, data):
+        print("ThongTinCaNhanView.loadData()")
+        for row in data:
+            for field_name in row:
+                self.entries[field_name].insert(0, row[field_name])
 
     def setupView(self):
-        root = self.tkRoot
-        root.geometry("500x350")
+        root = self.root
+        root.geometry("450x400")
 
-        lbMaGv = tk.Label(root, text="Ma Giao Vien").place(x=5, y=5)
-        lbHoTen = tk.Label(root, text="Ho va ten").place(x=5, y=35)
-        lbHocVi = tk.Label(root, text="Hoc vi").place(x=5, y=65)
-        lbHocHam = tk.Label(root, text="Hoc ham").place(x=5, y=95)
-        lbGioiTinh = tk.Label(root, text="Gioi tinh").place(x=5, y=125)
-        lbNgSinh = tk.Label(root, text="Ngay Sinh").place(x=5, y=155)
-        lbNgVL = tk.Label(root, text="Ngay Vao Lam").place(x=5, y=185)
-        lbHeSo = tk.Label(root, text="He so").place(x=5, y=215)
-        lbMucLuong = tk.Label(root, text="Muc luong").place(x=5, y=245)
-        lbMaKhoa = tk.Label(root, text="Ma Khoa").place(x=5, y=275)
+        self.entries = {}
+        self.fields = [
+            ("Mã Giáo Viên", "MAGV"),
+            ("Họ và tên", "HOTEN"),
+            ("Học vị", "HOCVI"),
+            ("Học hàm", "HOCHAM"),
+            ("Giới tính", "GIOITINH"),
+            ("Ngày Sinh", "NGSINH"),
+            ("Ngày Vào Làm", "NGVL"),
+            ("Hệ số", "HESO"),
+            ("Mức lương", "MUCLUONG"),
+            ("Mã Khoa", "MAKHOA")
+        ]
 
-        self.etMaGv = tk.Entry(root, width=60)
-        self.etMaGv.place(x=100, y=5)
+        for i, (label_text, field_name) in enumerate(self.fields):
+            # Label
+            tk.Label(root, text=label_text).grid(row=i, column=0, sticky=tk.W, pady=5)
+            # Entry
+            entry = tk.Entry(root, width=50)
+            entry.grid(row=i, column=1, sticky=(tk.W, tk.E), padx=5, pady=5)
+            self.entries[field_name] = entry
 
-        self.etHoTen = tk.Entry(root, text="Ho va ten", width=60)
-        self.etHoTen.place(x=100, y=35)
+        # Buttons
+        button_frame = tk.Frame(root)
+        button_frame.grid(row=len(self.fields), column=0, columnspan=2, pady=20)
 
-        self.etHocVi = tk.Entry(root, text="Hoc vi", width=60)
-        self.etHocVi.place(x=100, y=65)
+        tk.Button(button_frame, text="Cập nhật", command=self.capNhat).pack(side=tk.LEFT, padx=5)
 
-        self.etHocHam = tk.Entry(root, text="Hoc ham", width=60)
-        self.etHocHam.place(x=100, y=95)
+    def capNhat(self):
+        print("ThongTinCaNhanView.capNhat()")
+        data = (
+            self.entries["MAGV"].get(),
+            self.entries["HOTEN"].get(),
+            self.entries["HOCVI"].get(),
+            self.entries["HOCHAM"].get(),
+            self.entries["GIOITINH"].get(),
+            self.entries["NGSINH"].get(),
+            self.entries["NGVL"].get(),
+            float(self.entries["HESO"].get() or 0),
+            float(self.entries["MUCLUONG"].get() or 0),
+            self.entries["MAKHOA"].get()
+        )
+        query=(f"UPDATE giaovien SET HOTEN = '{data[1]}', "
+               f"HOCVI = '{data[2]}', HOCHAM = '{data[3]}', GIOITINH = '{data[4]}', "
+               f"NGSINH = '{data[5]}', NGVL = '{data[6]}', HESO = '{data[7]}', "
+               f"MUCLUONG = '{data[8]}', MAKHOA = '{data[9]}' "
+               f"WHERE maGV = '{data[0]}'")
 
-        self.etGioiTinh = tk.Entry(root, text="Gioi tinh", width=60)
-        self.etGioiTinh.place(x=100, y=125)
-
-        self.etNgSinh = tk.Entry(root, text="Ngay Sinh", width=60)
-        self.etNgSinh.place(x=100, y=155)
-
-        self.etNgVL = tk.Entry(root, text="Ngay Vao Lam", width=60)
-        self.etNgVL.place(x=100, y=185)
-
-        self.etHeSo = tk.Entry(root, text="He so", width=60)
-        self.etHeSo.place(x=100, y=215)
-
-        self.etMucLuong = tk.Entry(root, text="Muc luong", width=60)
-        self.etMucLuong.place(x=100, y=245)
-
-        self.etbMaKhoa = tk.Entry(root, text="Ma Khoa", width=60)
-        self.etbMaKhoa.place(x=100, y=275)
-
-        self.capNhatBtn = tk.Button(root, text="Cap nhat")
-        self.capNhatBtn.place(x=100, y=305)
-
-        self.initData()
-
-        root.mainloop()
-
-    def initData(self):
-        self.giaoVien = GiaoVienModel()
-        self.giaoVien.maGV = "query xong cho data vao"
-
-        self.etMaGv.insert(0, self.giaoVien.maGV)
-        pass
+        GiaoVienModel.getInstance().update(query)
 
 
-ThongTinCaNhanView.getInstance().setupView()
+
+
