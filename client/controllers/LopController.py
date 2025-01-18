@@ -16,6 +16,11 @@ class LopController:
         self._model = model
         self._view = view
         self._tree = self._view.tree
+        self._view.ma_lop.bind('<KeyRelease>', self.ma_lop_text_change)
+        self._view.ten_lop.bind('<KeyRelease>', self.field_text_change)
+        self._view.trg_lop.bind('<KeyRelease>', self.field_text_change)
+        self._view.siso.bind('<KeyRelease>', self.field_text_change)
+        self._view.ma_gvcn.bind('<KeyRelease>', self.field_text_change)
         self._view.buttonRefresh["command"] = self.btn_refresh
         self._view.buttonAdd["command"] = self.add_item
         self._view.buttonEdit["command"] = self.update_item
@@ -28,8 +33,24 @@ class LopController:
         """Hiển thị danh sách lớp"""
         data = self._model.get_list_data()
         self._view.load_list(data)
+        self._view.buttonEdit.config(state="disabled")
+        self._view.buttonRemove.config(state="disabled")
+
+    def ma_lop_text_change(self, event=None):
+        self._view.buttonRefresh.config(state="normal")
+        self._view.buttonAdd.config(state="normal")
+        self._view.buttonEdit.config(state="disabled")
+        self._view.buttonRemove.config(state="disabled")
+
+    def field_text_change(self, event=None):
+        self._view.buttonRefresh.config(state="normal")
+        self._view.buttonAdd.config(state="normal")
+        self._view.buttonEdit.config(state="normal")
+        self._view.buttonRemove.config(state="normal")
 
     def btn_refresh(self):
+        self._view.buttonEdit.config(state="disabled")
+        self._view.buttonRemove.config(state="disabled")
         self._view.clear_inputs()
         self.load_data()
         
@@ -58,8 +79,14 @@ class LopController:
             return
 
         item = self._view.get_input_values()
-        self._model.update_item(item)
-        self._view.clear_inputs()
+        status = self._model.update_item(item)
+        if status == "UPDATED":
+            messagebox.showinfo("Thông báo", "Cập nhật thành công")
+            self._view.clear_inputs()
+        elif status == "NONE":
+            messagebox.showinfo("Thông báo", "Dữ liệu không bị thay đổi, không cần cập nhật")
+        else:
+            messagebox.showerror("Thông báo", "Lôi thao tác")
         self.load_data()
         
     def delete_item(self):
@@ -78,11 +105,12 @@ class LopController:
             self._model.delete_item(item)
             self.load_data()
             messagebox.showinfo("Thông báo", "Xóa lớp thành công.")
-        else:
-            messagebox.showinfo("Thông báo", "Hành động xóa đã bị hủy.")
         
     def get_selected_item(self, event=None):
         """Hàm xử lý khi người dùng chọn một mục trong Treeview."""
+        self._view.buttonAdd.config(state="normal")
+        self._view.buttonRemove.config(state="normal")
+        
         self._view.clear_inputs()
         lop = self._view.get_selected_item()
         if lop != None:

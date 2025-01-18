@@ -1,6 +1,7 @@
 from tkinter import ttk
 from tkinter import *
 
+from common.common import Common
 
 class LopView:
     _instance = None
@@ -16,6 +17,8 @@ class LopView:
     def __init__(self, root: Tk):
         self._root = root
         self._tree = ttk.Treeview(None)
+        self._common = Common()
+        self._common.center_window(root)
         self.initView()
         
     @property
@@ -25,64 +28,76 @@ class LopView:
     def initView(self):
         root = self._root
 
-        root.title("Danh sách lóp")
-        root.geometry("800x600")
-        self.top_frame = Frame(root)
-        self.top_frame.pack(fill="x", padx=10, pady=10)
+        root.title("Danh sách lớp")
+        self.top_frame = Frame(root, padx=10, pady=10)
+        self.top_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
+        self.top_frame.grid_rowconfigure(0, weight=1)  # Chỉ định row 0 có thể thay đổi kích thước
+        self.top_frame.grid_columnconfigure(0, weight=1)  # Chỉ định cột 0 có thể thay đổi kích thước
+        self.top_frame.grid_columnconfigure(1, weight=2)
+        self.top_frame.grid_columnconfigure(2, weight=2)
+        self.top_frame.grid_columnconfigure(3, weight=3)
+        
         self.header()
         self.body()
 
     def header(self):
         """Tạo các ô nhập liệu."""
-        #Mã lớp
-        self.label_ma_lop = Label(self.top_frame, text="Mã Lớp: ")
-        self.label_ma_lop.grid(row=0, column=0, padx=10)
+        
+        # Tiêu đề
+        self.labelTitle = Label(self.top_frame, text="Danh sách lớp", font=("Arial", 20, "bold"))
+        self.labelTitle.grid(row=0, column=0, columnspan=2, padx=10, pady=10) 
 
+        # Mã lớp
+        self.label_ma_lop = Label(self.top_frame, text="Mã Lớp: ", font=("Arial", 10, "bold"))
+        self.label_ma_lop.grid(row=1, column=0, padx=10, pady=5, sticky="e")
         self.entry_ma_lop_text = StringVar()
-        self.ma_lop = Entry(self.top_frame, textvariable=self.entry_ma_lop_text, width=15)
-        self.ma_lop.grid(row=0, column=1, padx=10)
-        
-        #Tên lớp
-        self.label_ten_lop = Label(self.top_frame, text="Tên Lớp: ")
-        self.label_ten_lop.grid(row=0, column=2, padx=10)
+        self.ma_lop = Entry(self.top_frame, textvariable=self.entry_ma_lop_text, width=40, font=("Arial", 10))
+        self.ma_lop.grid(row=1, column=1, padx=10, pady=5)
 
+        # Tên lớp
+        self.label_ten_lop = Label(self.top_frame, text="Tên Lớp: ", font=("Arial", 10, "bold"))
+        self.label_ten_lop.grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.entry_ten_lop_text = StringVar()
-        self.ten_lop = Entry(self.top_frame, textvariable=self.entry_ten_lop_text, width=15)
-        self.ten_lop.grid(row=0, column=3, padx=10)
+        self.ten_lop = Entry(self.top_frame, textvariable=self.entry_ten_lop_text, width=40, font=("Arial", 10))
+        self.ten_lop.grid(row=2, column=1, padx=10, pady=5)
 
-        #Trưởng lớp
-        self.label_trg_lop = Label(self.top_frame, text="Trưởng Lớp: ")
-        self.label_trg_lop.grid(row=0, column=4, padx=10)
-
+        # Trưởng lớp
+        self.label_trg_lop = Label(self.top_frame, text="Trưởng Lớp: ", font=("Arial", 10, "bold"))
+        self.label_trg_lop.grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.entry_trg_lop_text = StringVar()
-        self.trg_lop = Entry(self.top_frame, textvariable=self.entry_trg_lop_text, width=15)
-        self.trg_lop.grid(row=0, column=5, padx=10)
-        
-        #Sỉ số
-        self.label_siso = Label(self.top_frame, text="Sỉ Số: ")
-        self.label_siso.grid(row=0, column=6, padx=10)
+        self.trg_lop = Entry(self.top_frame, textvariable=self.entry_trg_lop_text, width=40, font=("Arial", 10))
+        self.trg_lop.grid(row=3, column=1, padx=10, pady=5)
 
+        # Sỉ số
+        self.label_siso = Label(self.top_frame, text="Sỉ Số: ", font=("Arial", 10, "bold"))
+        self.label_siso.grid(row=4, column=0, padx=10, pady=5, sticky="e")
         self.entry_siso_text = StringVar()
-        self.siso = Entry(self.top_frame, textvariable=self.entry_siso_text, width=15)
-        self.siso.grid(row=0, column=7, padx=10)
-        
-        #Mã GVCN
-        self.label_ma_gvcn = Label(self.top_frame, text="Mã GVCN: ")
-        self.label_ma_gvcn.grid(row=0, column=8, padx=10)
+        self.siso = Entry(self.top_frame, textvariable=self.entry_siso_text, width=10, font=("Arial", 10))
+        self.siso.grid(row=4, column=1, padx=10, pady=5)
 
+        # Mã GVCN
+        self.label_ma_gvcn = Label(self.top_frame, text="Mã GVCN: ", font=("Arial", 10, "bold"))
+        self.label_ma_gvcn.grid(row=5, column=0, padx=10, pady=5, sticky="e")
         self.entry_ma_gvcn_text = StringVar()
-        self.ma_gvcn = Entry(self.top_frame, textvariable=self.entry_ma_gvcn_text, width=15)
-        self.ma_gvcn.grid(row=0, column=9, padx=10)
+        self.ma_gvcn = Entry(self.top_frame, textvariable=self.entry_ma_gvcn_text, width=40, font=("Arial", 10))
+        self.ma_gvcn.grid(row=5, column=1, padx=10, pady=20)
 
-        self.buttonRefresh = Button(self.top_frame, text="Làm mới")
-        self.buttonRefresh.grid(row=1, column=1, pady=10)
-        self.buttonAdd = Button(self.top_frame, text="Thêm")
-        self.buttonAdd.grid(row=1, column=2, pady=10)
-        self.buttonEdit = Button(self.top_frame, text="Sửa")
-        self.buttonEdit.grid(row=1, column=3, pady=10)
-        self.buttonRemove = Button(self.top_frame, text="Xoá")
-        self.buttonRemove.grid(row=1, column=4, pady=10)
+        # Các nút chức năng
+        self.button_frame = Frame(self.top_frame)
+        self.button_frame.grid(row=6, column=0, columnspan=2, padx=10)
+
+        self.buttonRefresh = Button(self.button_frame, text="Làm mới", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonRefresh.grid(row=0, column=0, padx=10)
+
+        self.buttonAdd = Button(self.button_frame, text="Thêm", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonAdd.grid(row=0, column=1, padx=10)
+
+        self.buttonEdit = Button(self.button_frame, text="Cập nhật", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonEdit.grid(row=0, column=2, padx=10)
+
+        self.buttonRemove = Button(self.button_frame, text="Xoá", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonRemove.grid(row=0, column=3, padx=10)
 
     def body(self):
         """Tạo bảng Treeview."""
@@ -97,11 +112,11 @@ class LopView:
         self._tree.heading("SISO", text="Sỉ Số")
         self._tree.heading("MAGVCN", text="Mã GVCN")
 
-        self._tree.column("MALOP", width=100, anchor="center")
-        self._tree.column("TENLOP", width=200, anchor="w")
-        self._tree.column("TRGLOP", width=200, anchor="w")
-        self._tree.column("SISO", width=150, anchor="center")
-        self._tree.column("MAGVCN", width=150, anchor="w")
+        self._tree.column("MALOP", width=20, anchor="center")
+        self._tree.column("TENLOP", width=40, anchor="w")
+        self._tree.column("TRGLOP", width=40, anchor="w")
+        self._tree.column("SISO", width=20, anchor="center")
+        self._tree.column("MAGVCN", width=40, anchor="w")
 
     #get
     def get_selected_item(self):
