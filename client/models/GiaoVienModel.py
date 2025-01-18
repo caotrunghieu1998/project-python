@@ -28,7 +28,6 @@ class GiaoVienModel(ConnectDB):
         super().__init__()
 
     def convertData(self, data):
-
         return [{"MAGV": row[0],
                  "HOTEN": row[1],
                  "HOCVI": row[2],

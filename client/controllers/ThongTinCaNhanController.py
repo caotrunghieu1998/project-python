@@ -14,16 +14,12 @@ class ThongTinCaNhanController:
     def __init__(self):
         self.thongTinCaNhanView = ThongTinCaNhanView.getInstance()
         self.giaoVienModel = GiaoVienModel()
-        self.runMain()
 
-    def loadData(self):
-        data = self.giaoVienModel.getData("GV01")
+    def loadData(self, MAGV):
+        data = self.giaoVienModel.getData(MAGV)
         self.thongTinCaNhanView.loadData(data)
 
-    def runMain(self):
-        print("runMain")
-        self.loadData()
+    def show(self):
         self.thongTinCaNhanView.root.mainloop()
 
-main = ThongTinCaNhanController.getInstance()
 # main.runMain()
