@@ -41,7 +41,6 @@ class HocVienLoginController:
         self._view.btnProfile["command"] = self.goToProfileScreen
         self._view.btnKhoa["command"] = self.goToKhoaScreen
         self._view.btnHocVien["command"] = self.goToHocVienScreen
-        self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
         self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
         if self.commandBack:
@@ -83,10 +82,6 @@ class HocVienLoginController:
         c = HocVienController(m, v)
         c.initCommandButtonBack(self.back)
         v.showView()
-
-    def goToMonHocScreen(self):
-        self._view.tkRoot.destroy()
-        pass
 
     def goToLopScreen(self):
         self._view.tkRoot.destroy()

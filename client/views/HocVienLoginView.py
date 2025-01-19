@@ -49,14 +49,11 @@ class HocVienLoginView:
         self.btnHocVien.grid(row=1, column=1, padx=10, pady=5)
 
         # Hàng 3: "Môn Học", "Lớp", "Điểm"
-        self.btnMonHoc = Button(self.button_frame, text="Môn Học", font=("Arial", 10), width=20, relief="raised", bd=2)
-        self.btnMonHoc.grid(row=2, column=0, padx=10, pady=5)
-
         self.btnLop = Button(self.button_frame, text="Lớp", font=("Arial", 10), width=20, relief="raised", bd=2)
-        self.btnLop.grid(row=2, column=1, padx=10, pady=5)
+        self.btnLop.grid(row=2, column=0, padx=10, pady=5)
 
         self.btnKQThi = Button(self.button_frame, text="Kết quả thi", font=("Arial", 10), width=20, relief="raised", bd=2)
-        self.btnKQThi.grid(row=2, column=2, padx=10, pady=5)
+        self.btnKQThi.grid(row=2, column=1, padx=10, pady=5)
 
     def showView(self):
         self.tkRoot.mainloop()
