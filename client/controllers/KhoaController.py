@@ -121,3 +121,11 @@ class KhoaController:
             self._view.set_ten_khoa(ten_khoa)
             self._view.set_ngtlap(ngtlap)
             self._view.set_trgkhoa(trgkhoa)
+            
+    def initCommandButtonBack(self, commandBack):
+        if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back

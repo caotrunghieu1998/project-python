@@ -131,3 +131,11 @@ class GiangDayController:
             self._view.set_nam(nam)
             self._view.set_tu_ngay(tu_ngay)
             self._view.set_den_ngay(den_ngay)
+
+    def initCommandButtonBack(self, commandBack):
+        if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back

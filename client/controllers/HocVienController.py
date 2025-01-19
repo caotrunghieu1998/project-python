@@ -130,3 +130,11 @@ class HocVienController:
             self._view.set_gioitinh(gioitinh)
             self._view.set_noisinh(noisinh)
             self._view.set_ma_lop(ma_lop)
+
+    def initCommandButtonBack(self, commandBack):
+        if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back

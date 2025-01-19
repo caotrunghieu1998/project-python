@@ -60,6 +60,7 @@ class GiaoVienController:
         m = ThongTinCaNhanGiaoVienModel()
         v = ThongTinCaNhanGiaoVienView(root, data)
         c = ThongTinCaNhanGiaoVienController(m, v)
+        c.initCommandButtonBack(self.back)
 
     def goToDangXuatScreen(self):
         pass
@@ -70,6 +71,7 @@ class GiaoVienController:
         m = KhoaModel()
         v = KhoaView(root)
         c = KhoaController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToHocVienScreen(self):
@@ -78,6 +80,7 @@ class GiaoVienController:
         m = HocVienModel()
         v = HocVienView(root)
         c = HocVienController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToGiangDayScreen(self):
@@ -86,6 +89,7 @@ class GiaoVienController:
         m = GiangDayModel()
         v = GiangDayView(root)
         c = GiangDayController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToMonHocScreen(self):

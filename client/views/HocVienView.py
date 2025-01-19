@@ -114,6 +114,9 @@ class HocVienView:
         self.buttonRemove = Button(self.button_frame, text="Xoá", font=("Arial", 10), width=12, relief="raised", bd=2)
         self.buttonRemove.grid(row=0, column=3, padx=10)
 
+        self.buttonBack = Button(self.button_frame, text="Trở về", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonBack.grid(row=0, column=4, padx=10)
+
     def body(self):
         """Tạo bảng Treeview."""
         self._tree = ttk.Treeview(
