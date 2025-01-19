@@ -1,4 +1,5 @@
 from models.connectDB import ConnectDB
+import hashlib
 
 class HocVienLogin:
     def __init__(self):
@@ -24,11 +25,12 @@ class HocVienLoginModel(ConnectDB):
     def convert(self, data):
         return [self.convert_obj(row) for row in data]
     
-    def login(self, ma):
+    def login(self, ma: str, password: str):
         db = self.connect()
         cursor = db.cursor()
-        query = "SELECT * FROM {0} WHERE MAHV = %s".format(self.NAME_TABLE_HOCVIEN)
-        cursor.execute(query, (ma))
+        hashed_password = hashlib.md5(password.encode()).hexdigest()
+        query = "SELECT * FROM {0} WHERE MAHV = %s AND PASSWORD = %s".format(self.NAME_TABLE_HOCVIEN)
+        cursor.execute(query, (ma, hashed_password))
         data = cursor.fetchall()
         self.close()
         return self.convert(data)

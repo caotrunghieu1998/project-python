@@ -1,4 +1,5 @@
 from models.connectDB import ConnectDB
+import hashlib
 
 
 class GiaoVien:
@@ -40,11 +41,12 @@ class GiaoVienModel(ConnectDB):
                  "MAKHOA": row[9]
                  } for row in data]
 
-    def login(self, maGV):
+    def login(self, maGV: str, password: str):
         db = self.connect()
         cursor = db.cursor()
-        query = "SELECT * FROM {0} WHERE maGV = %s".format(self.NAME_TABLE_GIAOVIEN)
-        cursor.execute(query, (maGV))
+        hashed_password = hashlib.md5(password.encode()).hexdigest()
+        query = "SELECT * FROM {0} WHERE maGV = %s AND PASSWORD = %s".format(self.NAME_TABLE_GIAOVIEN)
+        cursor.execute(query, (maGV, hashed_password))
         data = cursor.fetchall()
         self.close()
         return self.convertData(data)

@@ -80,7 +80,7 @@ class LoginView:
         if not email or not password:
             messagebox.showerror("Cảnh báo", "Hãy điền đầy đủ Email và Password!")
         else:
-            user = GiaoVienModel.getInstance().login(email)
+            user = GiaoVienModel.getInstance().login(email, password)
             if (user):
                 messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
@@ -101,7 +101,7 @@ class LoginView:
         if not email or not password:
             messagebox.showerror("Cảnh báo", "Hãy điền đầy đủ Email và Password!")
         else:
-            user = HocVienLoginModel.getInstance().login(email)
+            user = HocVienLoginModel.getInstance().login(email, password)
             if (user):
                 messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAHV"]}\"")
                 self.tkRoot.destroy()
