@@ -15,10 +15,11 @@ class GiaoVienView:
     def __init__(self, root: Tk, giao_vien):
         self.tkRoot = root
         self._common = Common()
+        self._giao_vien = giao_vien
         self._common.center_window(self.tkRoot, 610, 300)
-        self.initView(giao_vien)
+        self.initView()
 
-    def initView(self, giao_vien):
+    def initView(self):
         root = self.tkRoot
 
         root.title("Chức năng giáo viên")
@@ -26,7 +27,7 @@ class GiaoVienView:
         self.top_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
         # Header
-        self.labelTitle = Label(self.top_frame, text="Xin chào giáo viên {0}".format(giao_vien[0]["HOTEN"]), font=("Arial", 20, "bold"))
+        self.labelTitle = Label(self.top_frame, text="Xin chào giáo viên {0}".format(self._giao_vien[0]["HOTEN"]), font=("Arial", 20, "bold"))
         self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)
         
         # Tạo button_frame

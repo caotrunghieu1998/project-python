@@ -65,8 +65,8 @@ class HocVienView:
         self.ho_hv = Entry(self.top_frame, textvariable=self.entry_ho_hv_text, width=40, font=("Arial", 10))
         self.ho_hv.grid(row=2, column=1, padx=10, pady=5)
         
-        self.label_ho_hv = Label(self.top_frame, text="Tên: ", font=("Arial", 10, "bold"))
-        self.label_ho_hv.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.label_ten_hv = Label(self.top_frame, text="Tên: ", font=("Arial", 10, "bold"))
+        self.label_ten_hv.grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.entry_ten_hv_text = StringVar()
         self.ten_hv = Entry(self.top_frame, textvariable=self.entry_ten_hv_text, width=40, font=("Arial", 10))
         self.ten_hv.grid(row=3, column=1, padx=10, pady=5)

@@ -1,4 +1,3 @@
-from controllers.ThongTinCaNhanController import ThongTinCaNhanController
 from models.HocVienLoginModel import HocVienLoginModel
 from views.HocVienLoginView import HocVienLoginView
 
@@ -22,7 +21,6 @@ from views.ThongTinCaNhanHocVienView import ThongTinCaNhanHocVienView
 
 class HocVienLoginController:
     _instance = None
-    giaoVien = None
 
     @classmethod
     def getInstance(cls):
@@ -60,6 +58,7 @@ class HocVienLoginController:
         pass
 
     def goToKhoaScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = KhoaModel()
         v = KhoaView(root)
@@ -67,6 +66,7 @@ class HocVienLoginController:
         v.showView()
 
     def goToHocVienScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = HocVienModel()
         v = HocVienView(root)
@@ -74,9 +74,11 @@ class HocVienLoginController:
         v.showView()
 
     def goToMonHocScreen(self):
+        self._view.tkRoot.destroy()
         pass
 
     def goToLopScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = LopModel()
         v = LopView(root)

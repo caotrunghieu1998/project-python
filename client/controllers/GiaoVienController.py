@@ -1,4 +1,3 @@
-from controllers.ThongTinCaNhanController import ThongTinCaNhanController
 from models.GiaoVienModel import GiaoVienModel
 from views.GiaoVienView import GiaoVienView
 
@@ -19,10 +18,13 @@ from controllers.GiangDayController import GiangDayController
 from models.GiangDayModel import GiangDayModel
 from views.GiangDayView import GiangDayView
 
+from controllers.ThongTinCaNhanGiaoVienController import ThongTinCaNhanGiaoVienController
+from models.ThongTinCaNhanGiaoVienModel import ThongTinCaNhanGiaoVienModel
+from views.ThongTinCaNhanGiaoVienView import ThongTinCaNhanGiaoVienView
+
 
 class GiaoVienController:
     _instance = None
-    giaoVien = None
 
     @classmethod
     def getInstance(cls):
@@ -48,14 +50,19 @@ class GiaoVienController:
     def load_data(self):
         """Hiển thị danh sách"""
 
-    def goToProfileScreen(self, ma):
-        data = self._model.login(ma)
-        ThongTinCaNhanController.getInstance().loadData(data[0]["MAGV"], 'GIAOVIEN')
+    def goToProfileScreen(self):
+        data = self._model.login(self._view._giao_vien[0]["MAGV"])
+        print('dadawd', data)
+        root = Tk()
+        m = ThongTinCaNhanGiaoVienModel()
+        v = ThongTinCaNhanGiaoVienView(root, data)
+        c = ThongTinCaNhanGiaoVienController(m, v)
 
     def goToDangXuatScreen(self):
         pass
 
     def goToKhoaScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = KhoaModel()
         v = KhoaView(root)
@@ -63,6 +70,7 @@ class GiaoVienController:
         v.showView()
 
     def goToHocVienScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = HocVienModel()
         v = HocVienView(root)
@@ -70,6 +78,7 @@ class GiaoVienController:
         v.showView()
 
     def goToGiangDayScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = GiangDayModel()
         v = GiangDayView(root)
@@ -77,9 +86,11 @@ class GiaoVienController:
         v.showView()
 
     def goToMonHocScreen(self):
+        self._view.tkRoot.destroy()
         pass
 
     def goToLopScreen(self):
+        self._view.tkRoot.destroy()
         root = Tk()
         m = LopModel()
         v = LopView(root)

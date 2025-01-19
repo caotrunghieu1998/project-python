@@ -49,12 +49,12 @@ class ThongTinCaNhanHocVienModel(ConnectDB):
         
         return self.convert(data)
     
-    def get_data_by_ma_hv(self, item):
+    def get_data_by_ma_gv(self, item):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
         cursor = db.cursor()
         query = "SELECT * FROM {0} WHERE MAHV = %s".format(self.NAME_TABLE_HOCVIEN)
-        cursor.execute(query, (item["MAHV"]))
+        cursor.execute(query, (item[0]["MAHV"]))
         data = cursor.fetchone()
         self.close()
         
