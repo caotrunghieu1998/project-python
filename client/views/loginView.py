@@ -88,6 +88,8 @@ class LoginView:
                 m = GiaoVienModel()
                 v = GiaoVienView(root, user)
                 c = GiaoVienController(m, v)
+                c.initCommandButtonDangXuat(self.back)
+                c.initItemView()
                 v.showView()
             else:
                 messagebox.showerror("Thất bại", "Tài khoản hoặc mật khẩu giáo viên không chính xác")
@@ -112,3 +114,12 @@ class LoginView:
                 v.showView()
             else:
                 messagebox.showerror("Thất bại", "Tài khoản hoặc mật khẩu học viên không chính xác")
+
+    def reuse(self):
+        self.tkRoot = Tk()
+        self._common.center_window(self.tkRoot, 500, 300)
+        self.initView()
+
+    def back(self):
+        self.reuse()
+        self.showView()

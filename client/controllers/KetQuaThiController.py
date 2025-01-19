@@ -146,3 +146,11 @@ class KetQuaThiController:
             self._view.set_ng_thi(ng_thi)
             self._view.set_diem(diem)
             self._view.set_kqua(kqua)
+
+    def initCommandButtonBack(self, commandBack):
+         if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back

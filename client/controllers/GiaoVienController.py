@@ -44,17 +44,21 @@ class GiaoVienController:
     def __init__(self, model: GiaoVienModel, view: GiaoVienView):
         self._model = model
         self._view = view
-        self.initItemView()
         
     def initItemView(self):
         self._view.btnProfile["command"] = self.goToProfileScreen
-        self._view.btnDangXuat["command"] = self.goToDangXuatScreen
         self._view.btnKhoa["command"] = self.goToKhoaScreen
         self._view.btnHocVien["command"] = self.goToHocVienScreen
         self._view.btnGiangDay["command"] = self.goToGiangDayScreen
         self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
         self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
+        if self.commandBack:
+            def _back():
+                self._view.tkRoot.destroy()
+                self.commandBack()
+
+            self._view.btnDangXuat["command"] = _back
         
         self.load_data()
         
@@ -69,9 +73,6 @@ class GiaoVienController:
         v = ThongTinCaNhanGiaoVienView(root, data)
         c = ThongTinCaNhanGiaoVienController(m, v)
         c.initCommandButtonBack(self.back)
-
-    def goToDangXuatScreen(self):
-        pass
 
     def goToKhoaScreen(self):
         self._view.tkRoot.destroy()
@@ -125,9 +126,13 @@ class GiaoVienController:
         m = KetQuaThiModel()
         v = KetQuaThiView(root, ma_gv, "GIAOVIEN")
         c = KetQuaThiController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
     
     def back(self):
         self._view.reuse()
         self.initItemView()
         self._view.showView()
+
+    def initCommandButtonDangXuat(self, commandBack):
+         self.commandBack = commandBack
