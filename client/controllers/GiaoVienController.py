@@ -11,6 +11,10 @@ from controllers.HocVienController import HocVienController
 from models.HocVienModel import HocVienModel
 from views.hocVienView import HocVienView
 
+from controllers.KhoaController import KhoaController
+from models.KhoaModel import KhoaModel
+from views.KhoaView import KhoaView
+
 
 class GiaoVienController:
     _instance = None
@@ -48,7 +52,11 @@ class GiaoVienController:
         pass
 
     def goToKhoaScreen(self):
-        pass
+        root = Tk()
+        m = KhoaModel()
+        v = KhoaView(root)
+        c = KhoaController(m, v)
+        v.showView()
 
     def goToHocVienScreen(self):
         root = Tk()

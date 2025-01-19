@@ -13,6 +13,7 @@ class ConnectDB:
     NAME_TABLE_LOP = "lop"
     NAME_TABLE_GIAOVIEN = "giaovien"
     NAME_TABLE_HOCVIEN = "hocvien"
+    NAME_TABLE_KHOA = "khoa"
 
     def __init__(self):
         self.connection = None
