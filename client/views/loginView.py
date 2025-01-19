@@ -5,7 +5,7 @@ from controllers.userController import UserController
 from controllers.GiaoVienController import GiaoVienController
 from models.GiaoVienModel import GiaoVienModel
 from views.GiaoVienView import GiaoVienView
-
+from common.common import Common
 
 
 class LoginView:
@@ -21,28 +21,40 @@ class LoginView:
     def __init__(self):
         self.tkRoot = Tk()
         self.userController = UserController.getInstance()
+        self._common = Common()
+        self._common.center_window(self.tkRoot, 500, 300)
     
     def initView(self):
         root = self.tkRoot
 
         root.title("Đăng nhập")
-        root.geometry("300x250")
-
+        self.top_frame = Frame(root, padx=10, pady=10)
+        self.top_frame.pack(padx=10, pady=10, fill="both", expand=True)
+        
         #Creating layout of login form
         Label(root, text="Hãy điền các thông tin cần thiết", width="300", bg="orange",fg="white").pack()
+        
+        # Tên đăng nhập
+        self.label_inputEmail = Label(self.top_frame, text="Tên đăng nhập *: ", font=("Arial", 10, "bold"))
+        self.label_inputEmail.grid(row=1, column=0, padx=10, pady=5, sticky="e")
+        self.entry_inputEmail_text = StringVar(value="GV01")
+        self.inputEmail = Entry(self.top_frame, textvariable=self.entry_inputEmail_text, width=40, font=("Arial", 10))
+        self.inputEmail.grid(row=1, column=1, padx=10, pady=5)
 
-        #Email label and text entry box
-        Label(root, text="Email *").place(x=20,y=40)
-        self.inputEmail = StringVar(value="nguyenVanA@gmail.com")
-        Entry(root, textvariable=self.inputEmail).place(x=90,y=42)  
-
-        #password label and password entry box
-        Label(root,text="Password *").place(x=20,y=80)  
-        self.inputPassword = StringVar(value="12345678")
-        Entry(root, textvariable=self.inputPassword, show='*').place(x=90,y=82)  
+        # Mật khẩu
+        self.label_inputPassword = Label(self.top_frame, text="Mật khẩu: ", font=("Arial", 10, "bold"))
+        self.label_inputPassword.grid(row=2, column=0, padx=10, pady=5, sticky="e")
+        self.entry_inputPassword_text = StringVar()
+        self.inputPassword = Entry(self.top_frame, textvariable=self.entry_inputPassword_text, width=40, font=("Arial", 10), show='*')
+        self.inputPassword.grid(row=2, column=1, padx=10, pady=5)
+        
         #login button
+        self.button_frame = Frame(self.top_frame)
+        self.button_frame.grid(row=3, column=0, columnspan=2, padx=10)
 
-        Button(root, text="Đăng nhập", width=10, height=1, bg="orange", command=self.login).place(x=105,y=130) 
+        self.buttonRefresh = Button(self.button_frame, text="Đăng nhập", font=("Arial", 10), width=12, relief="raised", bd=2, command=self.login)
+        self.buttonRefresh.grid(row=0, column=0, padx=10)
+
 
     def showView(self):
         self.tkRoot.mainloop()
@@ -60,11 +72,8 @@ class LoginView:
             if (user):
                 messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
-                
-                root = Tk()
-                m = GiaoVienModel()
-                v = GiaoVienView(root)
-                c = GiaoVienController(m, v)
-                v.showView()
+                giaoVienView = GiaoVienView.getInstance()
+                giaoVienView.initView(user)
+                giaoVienView.showView()
             else:
                 messagebox.showerror("Thất bại", "Sai thông tin đăng")
