@@ -37,12 +37,12 @@ class LoginView:
         # Tên đăng nhập
         self.label_inputEmail = Label(self.top_frame, text="Tên đăng nhập *: ", font=("Arial", 10, "bold"))
         self.label_inputEmail.grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.entry_inputEmail_text = StringVar(value="GV01")
+        self.entry_inputEmail_text = StringVar(value="GV07")
         self.inputEmail = Entry(self.top_frame, textvariable=self.entry_inputEmail_text, width=40, font=("Arial", 10))
         self.inputEmail.grid(row=1, column=1, padx=10, pady=5)
 
         # Mật khẩu
-        self.label_inputPassword = Label(self.top_frame, text="Mật khẩu: ", font=("Arial", 10, "bold"))
+        self.label_inputPassword = Label(self.top_frame, text="Mật khẩu *: ", font=("Arial", 10, "bold"))
         self.label_inputPassword.grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.entry_inputPassword_text = StringVar()
         self.inputPassword = Entry(self.top_frame, textvariable=self.entry_inputPassword_text, width=40, font=("Arial", 10), show='*')

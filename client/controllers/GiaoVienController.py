@@ -7,6 +7,10 @@ from controllers.LopController import LopController
 from models.LopModel import LopModel
 from views.lopView import LopView
 
+from controllers.HocVienController import HocVienController
+from models.HocVienModel import HocVienModel
+from views.hocVienView import HocVienView
+
 
 class GiaoVienController:
     _instance = None
@@ -22,6 +26,14 @@ class GiaoVienController:
     def __init__(self, model: GiaoVienModel, view: GiaoVienView):
         self._model = model
         self._view = view
+        self._view.btnProfile["command"] = self.goToProfileScreen
+        self._view.btnDangXuat["command"] = self.goToDangXuatScreen
+        self._view.btnKhoa["command"] = self.goToKhoaScreen
+        self._view.btnHocVien["command"] = self.goToHocVienScreen
+        self._view.btnGiangDay["command"] = self.goToGiangDayScreen
+        self._view.btnMonHoc["command"] = self.goToMonHocScreen
+        self._view.btnLop["command"] = self.goToLopScreen
+        self._view.btnDiem["command"] = self.goToDiemScreen
         
         self.load_data()
         
@@ -32,17 +44,31 @@ class GiaoVienController:
         gv = self._model.getData(maGV)
         ThongTinCaNhanController.getInstance().loadData(gv[0]["MAGV"])
 
-    def goToKhoaScreen(self):
-        print("Khoa")
-
-    def goToMonHocScreen(self):
-        print("Mon Hoc")
-
-    def goToClassScreen(self):
+    def goToDangXuatScreen(self):
         pass
 
-    def goToScoreScreen(self):
-        print("Diem")
+    def goToKhoaScreen(self):
+        pass
 
-    def dangXuat(self):
-        print("Dang xuat")
+    def goToHocVienScreen(self):
+        root = Tk()
+        m = HocVienModel()
+        v = HocVienView(root)
+        c = HocVienController(m, v)
+        v.showView()
+
+    def goToGiangDayScreen(self):
+        pass
+
+    def goToMonHocScreen(self):
+        pass
+
+    def goToLopScreen(self):
+        root = Tk()
+        m = LopModel()
+        v = LopView(root)
+        c = LopController(m, v)
+        v.showView()
+
+    def goToDiemScreen(self):
+        pass

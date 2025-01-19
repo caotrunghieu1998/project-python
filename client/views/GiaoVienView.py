@@ -34,31 +34,31 @@ class GiaoVienView:
         self.button_frame.grid(row=1, column=0, columnspan=2, pady=20)
 
         # Hàng 1: "Thông tin cá nhân", "Đăng xuất"
-        btnProfile = Button(self.button_frame, text="Thông tin cá nhân", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnProfile.grid(row=0, column=0, padx=10, pady=5)
+        self.btnProfile = Button(self.button_frame, text="Thông tin cá nhân", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnProfile.grid(row=0, column=0, padx=10, pady=5)
 
-        btnDangXuat = Button(self.button_frame, text="Đăng xuất", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnDangXuat.grid(row=0, column=1, padx=10, pady=5)
+        self.btnDangXuat = Button(self.button_frame, text="Đăng xuất", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnDangXuat.grid(row=0, column=1, padx=10, pady=5)
 
         # Hàng 2: "Khoa", "Học Viên", "Giảng Dạy"
-        btnKhoa = Button(self.button_frame, text="Khoa", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnKhoa.grid(row=1, column=0, padx=10, pady=5)
+        self.btnKhoa = Button(self.button_frame, text="Khoa", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnKhoa.grid(row=1, column=0, padx=10, pady=5)
 
-        btnHocVien = Button(self.button_frame, text="Học Viên", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnHocVien.grid(row=1, column=1, padx=10, pady=5)
+        self.btnHocVien = Button(self.button_frame, text="Học Viên", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnHocVien.grid(row=1, column=1, padx=10, pady=5)
 
-        btnGiangDay = Button(self.button_frame, text="Giảng Dạy", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnGiangDay.grid(row=1, column=2, padx=10, pady=5)
+        self.btnGiangDay = Button(self.button_frame, text="Giảng Dạy", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnGiangDay.grid(row=1, column=2, padx=10, pady=5)
 
         # Hàng 3: "Môn Học", "Lớp", "Điểm"
-        btnMonHoc = Button(self.button_frame, text="Môn Học", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnMonHoc.grid(row=2, column=0, padx=10, pady=5)
+        self.btnMonHoc = Button(self.button_frame, text="Môn Học", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnMonHoc.grid(row=2, column=0, padx=10, pady=5)
 
-        btnLop = Button(self.button_frame, text="Lớp", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnLop.grid(row=2, column=1, padx=10, pady=5)
+        self.btnLop = Button(self.button_frame, text="Lớp", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnLop.grid(row=2, column=1, padx=10, pady=5)
 
-        btnDiem = Button(self.button_frame, text="Điểm", font=("Arial", 10), width=20, relief="raised", bd=2)
-        btnDiem.grid(row=2, column=2, padx=10, pady=5)
+        self.btnDiem = Button(self.button_frame, text="Điểm", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnDiem.grid(row=2, column=2, padx=10, pady=5)
 
     def showView(self):
         self.tkRoot.mainloop()
