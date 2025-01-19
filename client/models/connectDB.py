@@ -16,6 +16,7 @@ class ConnectDB:
     NAME_TABLE_KHOA = "khoa"
     NAME_TABLE_GIANGDAY = "giangday"
     NAME_TABLE_KETQUATHI = "ketquathi"
+    NAME_TABLE_MONHOC = "monhoc"
 
     def __init__(self):
         self.connection = None

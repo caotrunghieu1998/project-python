@@ -26,6 +26,10 @@ from controllers.KetQuaThiController import KetQuaThiController
 from models.KetQuaThiModel import KetQuaThiModel
 from views.KetQuaThiView import KetQuaThiView
 
+from controllers.MonHocController import MonHocController
+from models.MonHocModel import MonHocModel
+from views.MonHocView import MonHocView
+
 
 class GiaoVienController:
     _instance = None
@@ -98,7 +102,12 @@ class GiaoVienController:
 
     def goToMonHocScreen(self):
         self._view.tkRoot.destroy()
-        pass
+        root = Tk()
+        m = MonHocModel()
+        v = MonHocView(root)
+        c = MonHocController(m, v)
+        c.initCommandButtonBack(self.back)
+        v.showView()
 
     def goToLopScreen(self):
         self._view.tkRoot.destroy()
