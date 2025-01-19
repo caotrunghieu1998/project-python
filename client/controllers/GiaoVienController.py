@@ -36,6 +36,9 @@ class GiaoVienController:
     def __init__(self, model: GiaoVienModel, view: GiaoVienView):
         self._model = model
         self._view = view
+        self.initItemView()
+        
+    def initItemView(self):
         self._view.btnProfile["command"] = self.goToProfileScreen
         self._view.btnDangXuat["command"] = self.goToDangXuatScreen
         self._view.btnKhoa["command"] = self.goToKhoaScreen
@@ -95,7 +98,14 @@ class GiaoVienController:
         m = LopModel()
         v = LopView(root)
         c = LopController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToKetQuaThiScreen(self):
         pass
+    
+    def back(self):
+        self._view.reuse()
+        self.initItemView()
+        self._view.showView()
+
