@@ -16,45 +16,62 @@ class KetQuaThiController:
         self._model = model
         self._view = view
         self._tree = self._view.tree
-        self._view.ma_hv.bind('<KeyRelease>', self.ma_hv_text_change)
-        self._view.ma_mh.bind('<KeyRelease>', self.field_text_change)
-        self._view.lanthi.bind('<KeyRelease>', self.field_text_change)
-        self._view.diem.bind('<KeyRelease>', self.field_text_change)
-        self._view.kqua.bind('<KeyRelease>', self.field_text_change)
-        self._view.buttonRefresh["command"] = self.btn_refresh
-        self._view.buttonAdd["command"] = self.add_item
-        self._view.buttonEdit["command"] = self.update_item
-        self._view.buttonRemove["command"] = self.delete_item
-        self._view.tree.bind('<<TreeviewSelect>>', self.get_selected_item)
+        self._type = self._view.type_param
         
+        if self._type == "GIAOVIEN":
+            self._view.ma_hv.bind('<KeyRelease>', self.ma_hv_text_change)
+            self._view.ma_mh.bind('<KeyRelease>', self.field_text_change)
+            self._view.lanthi.bind('<KeyRelease>', self.field_text_change)
+            self._view.diem.bind('<KeyRelease>', self.field_text_change)
+            self._view.kqua.bind('<KeyRelease>', self.field_text_change)
+            self._view.ma_hv.config(state="normal")
+            self._view.ma_mh.config(state="normal")
+            self._view.lanthi.config(state="normal")
+            self._view.ng_thi.config(state="normal")
+            self._view.diem.config(state="normal")
+            self._view.kqua.config(state="normal")
+            self._view.buttonRefresh["command"] = self.btn_refresh
+            self._view.buttonAdd["command"] = self.add_item
+            self._view.buttonEdit["command"] = self.update_item
+            self._view.buttonRemove["command"] = self.delete_item
+            self._view.tree.bind('<<TreeviewSelect>>', self.get_selected_item)
+            
         self.load_data()
             
     def load_data(self):
         """Hiển thị danh sách"""
         print("self._view.data_param", self._view.data_param)
-        data = self._model.get_data_by_ma_hv(self._view.data_param[0]["MAHV"])
-        print("datadata", data)
+        
+        if self._type == "GIAOVIEN":
+            data = self._model.get_data_by_ma_gv(self._view.data_param)
+            self._view.buttonEdit.config(state="disabled")
+            self._view.buttonRemove.config(state="disabled")
+        else:
+            data = self._model.get_data_by_ma_hv(self._view.data_param[0]["MAHV"])
+        
         self._view.load_list(data)
-        self._view.buttonEdit.config(state="disabled")
-        self._view.buttonRemove.config(state="disabled")
+            
 
     def ma_hv_text_change(self, event=None):
-        self._view.buttonRefresh.config(state="normal")
-        self._view.buttonAdd.config(state="normal")
-        self._view.buttonEdit.config(state="disabled")
-        self._view.buttonRemove.config(state="disabled")
+        if self._type == "GIAOVIEN":
+            self._view.buttonRefresh.config(state="normal")
+            self._view.buttonAdd.config(state="normal")
+            self._view.buttonEdit.config(state="disabled")
+            self._view.buttonRemove.config(state="disabled")
 
     def field_text_change(self, event=None):
-        self._view.buttonRefresh.config(state="normal")
-        self._view.buttonAdd.config(state="normal")
-        self._view.buttonEdit.config(state="normal")
-        self._view.buttonRemove.config(state="normal")
+        if self._type == "GIAOVIEN":
+            self._view.buttonRefresh.config(state="normal")
+            self._view.buttonAdd.config(state="normal")
+            self._view.buttonEdit.config(state="normal")
+            self._view.buttonRemove.config(state="normal")
 
     def btn_refresh(self):
-        self._view.buttonEdit.config(state="disabled")
-        self._view.buttonRemove.config(state="disabled")
-        self._view.clear_inputs()
-        self.load_data()
+        if self._type == "GIAOVIEN":
+            self._view.buttonEdit.config(state="disabled")
+            self._view.buttonRemove.config(state="disabled")
+            self._view.clear_inputs()
+            self.load_data()
         
     def add_item(self):
         """Thêm dữ liệu"""

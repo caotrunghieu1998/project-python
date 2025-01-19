@@ -22,6 +22,10 @@ from controllers.ThongTinCaNhanGiaoVienController import ThongTinCaNhanGiaoVienC
 from models.ThongTinCaNhanGiaoVienModel import ThongTinCaNhanGiaoVienModel
 from views.ThongTinCaNhanGiaoVienView import ThongTinCaNhanGiaoVienView
 
+from controllers.KetQuaThiController import KetQuaThiController
+from models.KetQuaThiModel import KetQuaThiModel
+from views.KetQuaThiView import KetQuaThiView
+
 
 class GiaoVienController:
     _instance = None
@@ -98,4 +102,10 @@ class GiaoVienController:
         v.showView()
 
     def goToKetQuaThiScreen(self):
-        pass
+        self._view.tkRoot.destroy()
+        ma_gv = self._view._giao_vien[0]["MAGV"]
+        root = Tk()
+        m = KetQuaThiModel()
+        v = KetQuaThiView(root, ma_gv, "GIAOVIEN")
+        c = KetQuaThiController(m, v)
+        v.showView()

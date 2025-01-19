@@ -22,7 +22,10 @@ class KetQuaThiView:
         self._type = type
         self._tree = ttk.Treeview(None)
         self._common = Common()
-        self._common.center_window(root)
+        if type == "GIAOVIEN":
+            self._common.center_window(root)
+        else:
+            self._common.center_window(root, 800, 300)
         self.initView()
         
     @property
@@ -32,6 +35,10 @@ class KetQuaThiView:
     @property
     def data_param(self):
         return self._data
+    
+    @property
+    def type_param(self):
+        return self._type
     
     def initView(self):
         root = self._root
@@ -48,15 +55,21 @@ class KetQuaThiView:
         self.top_frame.grid_columnconfigure(4, weight=4)
         self.top_frame.grid_columnconfigure(5, weight=5)
         
-        self.header()
+        
+        # Tiêu đề
+
+        if self._type == "GIAOVIEN":
+            self.labelTitle = Label(self.top_frame, text="Danh sách kết quả thi", font=("Arial", 20, "bold"))
+            self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)
+            self.header()
+        else:
+            self.labelTitle = Label(self.top_frame, text="Danh sách kết quả thi của học viên {0} {1}".format(self.data_param[0]["HO"], self.data_param[0]["TEN"]), font=("Arial", 20, "bold"))
+            self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)  
+              
         self.body()
 
     def header(self):
         """Tạo các ô nhập liệu."""
-        # Tiêu đề
-        self.labelTitle = Label(self.top_frame, text="Danh sách kết quả thi", font=("Arial", 20, "bold"))
-        self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)
-
         # Mã HV
         self.label_ma_hv = Label(self.top_frame, text="Mã Học Viên: ", font=("Arial", 10, "bold"))
         self.label_ma_hv.grid(row=1, column=0, padx=10, pady=5, sticky="e")
