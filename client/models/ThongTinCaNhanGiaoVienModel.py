@@ -32,7 +32,9 @@ class ThongTinCaNhanGiaoVienModel(ConnectDB):
                         "NGVL": row[6],
                         "HESO": row[7],
                         "MUCLUONG": row[8],
-                        "MAKHOA": row[9]}
+                        "MAKHOA": row[9],
+                        "PASSWORD": row[10]
+                        }
         return data_convert
         
     def convert(self, data):

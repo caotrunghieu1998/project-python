@@ -38,15 +38,25 @@ class GiaoVienModel(ConnectDB):
                  "NGVL": row[6],
                  "HESO": row[7],
                  "MUCLUONG": row[8],
-                 "MAKHOA": row[9]
+                 "MAKHOA": row[9],
+                 "PASSWORD": row[10]
                  } for row in data]
 
-    def login(self, maGV: str, password: str):
+    def login(self, MAGV: str, password: str):
         db = self.connect()
         cursor = db.cursor()
         hashed_password = hashlib.md5(password.encode()).hexdigest()
-        query = "SELECT * FROM {0} WHERE maGV = %s AND PASSWORD = %s".format(self.NAME_TABLE_GIAOVIEN)
-        cursor.execute(query, (maGV, hashed_password))
+        query = "SELECT * FROM {0} WHERE MAGV = %s AND PASSWORD = %s".format(self.NAME_TABLE_GIAOVIEN)
+        cursor.execute(query, (MAGV, hashed_password))
+        data = cursor.fetchall()
+        self.close()
+        return self.convertData(data)
+    
+    def get_data_by_id(self, MAGV: str):
+        db = self.connect()
+        cursor = db.cursor()
+        query = "SELECT * FROM {0} WHERE MAGV = %s".format(self.NAME_TABLE_GIAOVIEN)
+        cursor.execute(query, (MAGV))
         data = cursor.fetchall()
         self.close()
         return self.convertData(data)

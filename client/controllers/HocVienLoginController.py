@@ -18,6 +18,10 @@ from controllers.ThongTinCaNhanHocVienController import ThongTinCaNhanHocVienCon
 from models.ThongTinCaNhanHocVienModel import ThongTinCaNhanHocVienModel
 from views.ThongTinCaNhanHocVienView import ThongTinCaNhanHocVienView
 
+from controllers.KetQuaThiController import KetQuaThiController
+from models.KetQuaThiModel import KetQuaThiModel
+from views.KetQuaThiView import KetQuaThiView
+
 
 class HocVienLoginController:
     _instance = None
@@ -38,8 +42,10 @@ class HocVienLoginController:
         self._view.btnHocVien["command"] = self.goToHocVienScreen
         self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
-        self._view.btnDiem["command"] = self.goToDiemScreen
+        self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
         
+        self._data = self._model.get_data_by_id(self._view._hoc_vien[0]["MAHV"])
+        print('self._data', self._data)
         self.load_data()
         
     def load_data(self):
@@ -47,10 +53,9 @@ class HocVienLoginController:
 
     def goToProfileScreen(self):
         self._view.tkRoot.destroy()
-        data = self._model.login(self._view._hoc_vien[0]["MAHV"])
         root = Tk()
         m = ThongTinCaNhanHocVienModel()
-        v = ThongTinCaNhanHocVienView(root, data)
+        v = ThongTinCaNhanHocVienView(root, self._data)
         c = ThongTinCaNhanHocVienController(m, v)
         v.showView()
 
@@ -85,5 +90,10 @@ class HocVienLoginController:
         c = LopController(m, v)
         v.showView()
 
-    def goToDiemScreen(self):
-        pass
+    def goToKetQuaThiScreen(self):
+        self._view.tkRoot.destroy()
+        root = Tk()
+        m = KetQuaThiModel()
+        v = KetQuaThiView(root, self._data, "HOCVIEN")
+        c = KetQuaThiController(m, v)
+        v.showView()

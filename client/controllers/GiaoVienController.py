@@ -43,7 +43,7 @@ class GiaoVienController:
         self._view.btnGiangDay["command"] = self.goToGiangDayScreen
         self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
-        self._view.btnDiem["command"] = self.goToDiemScreen
+        self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
         
         self.load_data()
         
@@ -52,7 +52,7 @@ class GiaoVienController:
 
     def goToProfileScreen(self):
         self._view.tkRoot.destroy()
-        data = self._model.login(self._view._giao_vien[0]["MAGV"])
+        data = self._model.get_data_by_id(self._view._giao_vien[0]["MAGV"])
         root = Tk()
         m = ThongTinCaNhanGiaoVienModel()
         v = ThongTinCaNhanGiaoVienView(root, data)
@@ -97,5 +97,5 @@ class GiaoVienController:
         c = LopController(m, v)
         v.showView()
 
-    def goToDiemScreen(self):
+    def goToKetQuaThiScreen(self):
         pass

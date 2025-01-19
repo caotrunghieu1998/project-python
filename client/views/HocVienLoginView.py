@@ -55,8 +55,8 @@ class HocVienLoginView:
         self.btnLop = Button(self.button_frame, text="Lớp", font=("Arial", 10), width=20, relief="raised", bd=2)
         self.btnLop.grid(row=2, column=1, padx=10, pady=5)
 
-        self.btnDiem = Button(self.button_frame, text="Điểm", font=("Arial", 10), width=20, relief="raised", bd=2)
-        self.btnDiem.grid(row=2, column=2, padx=10, pady=5)
+        self.btnKQThi = Button(self.button_frame, text="Kết quả thi", font=("Arial", 10), width=20, relief="raised", bd=2)
+        self.btnKQThi.grid(row=2, column=2, padx=10, pady=5)
 
     def showView(self):
         self.tkRoot.mainloop()

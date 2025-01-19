@@ -23,7 +23,7 @@ class ThongTinCaNhanHocVienModel(ConnectDB):
         super().__init__()
     
     def convert_obj(self, row):
-        data_convert = {"MAHV": row[0], "HO": row[1], "TEN": row[2], "NGSINH": row[3], "GIOITINH": row[4], "NOISINH": row[5], "MALOP": row[6]}
+        data_convert = {"MAHV": row[0], "HO": row[1], "TEN": row[2], "NGSINH": row[3], "GIOITINH": row[4], "NOISINH": row[5], "MALOP": row[6], "PASSWORD": row[7]}
         return data_convert
         
     def convert(self, data):
@@ -40,6 +40,7 @@ class ThongTinCaNhanHocVienModel(ConnectDB):
     
     def load_item(self, item):
         """Trả về danh sách dữ liệu."""
+        print(item)
         db = self.connect()
         cursor = db.cursor()
         query = "SELECT * FROM {0} WHERE MAHV = %s".format(self.NAME_TABLE_HOCVIEN)
