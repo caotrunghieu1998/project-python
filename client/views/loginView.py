@@ -72,8 +72,10 @@ class LoginView:
             if (user):
                 messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
-                giaoVienView = GiaoVienView.getInstance()
-                giaoVienView.initView(user)
-                giaoVienView.showView()
+                root = Tk()
+                m = GiaoVienModel()
+                v = GiaoVienView(root, user)
+                c = GiaoVienController(m, v)
+                v.showView()
             else:
                 messagebox.showerror("Thất bại", "Sai thông tin đăng")

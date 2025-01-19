@@ -17,4 +17,3 @@ if __name__ == '__main__':
 #     v = LopView(root)
 #     c = LopController(m, v)
 #     v.showView()
-

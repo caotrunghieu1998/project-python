@@ -43,7 +43,8 @@ class GiaoVienModel(ConnectDB):
     def getData(self, maGV):
         db = self.connect()
         cursor = db.cursor()
-        cursor.execute(f"SELECT * FROM giaovien WHERE maGV = '{maGV}'")
+        query = "SELECT * FROM {0} WHERE maGV = %s".format(self.NAME_TABLE_GIAOVIEN)
+        cursor.execute(query, (maGV))
         data = cursor.fetchall()
         self.close()
         return self.convertData(data)
