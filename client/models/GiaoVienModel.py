@@ -2,6 +2,8 @@ from models.connectDB import ConnectDB
 import hashlib
 
 
+from models.KetQuaThiModel import KetQuaThiModel
+
 class GiaoVien:
     def __init__(self):
         self.maGV = None
@@ -27,7 +29,8 @@ class GiaoVienModel(ConnectDB):
 
     def __init__(self):
         super().__init__()
-
+        self._modelKetQuaThi = KetQuaThiModel()
+        
     def convertData(self, data):
         return [{"MAGV": row[0],
                  "HOTEN": row[1],
@@ -60,7 +63,7 @@ class GiaoVienModel(ConnectDB):
         data = cursor.fetchall()
         self.close()
         return self.convertData(data)
-
+    
     def update(self, query):
         db = self.connect()
         cursor = db.cursor()

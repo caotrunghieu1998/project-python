@@ -45,7 +45,6 @@ class HocVienLoginController:
         self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
         
         self._data = self._model.get_data_by_id(self._view._hoc_vien[0]["MAHV"])
-        print('self._data', self._data)
         self.load_data()
         
     def load_data(self):

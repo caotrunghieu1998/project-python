@@ -28,7 +28,25 @@ class KetQuaThiModel(ConnectDB):
         
     def convert(self, data):
         return [self.convert_obj(row) for row in data]
-    
+
+    def get_data_by_ma_gv(self, magv):
+        """Trả về danh sách dữ liệu."""
+        db = self.connect()
+        cursor = db.cursor()
+        query = """
+                SELECT C.MAHV, C.MAMH, C.LANTHI, C.NGTHI, C.DIEM, C.KQUA FROM {0} A
+                INNER JOIN {1} B
+                ON A.MAGV = B.MAGV
+                INNER JOIN {2} C
+                ON B.MAMH = C.MAMH
+                WHERE A.MAGV = %s
+                """.format(self.NAME_TABLE_GIAOVIEN, self.NAME_TABLE_GIANGDAY, self.NAME_TABLE_KETQUATHI)
+        cursor.execute(query, (magv))
+        data = cursor.fetchall()
+        self.close()
+        
+        return self.convert(data)
+
     def get_data_by_ma_hv(self, ma_hv):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
