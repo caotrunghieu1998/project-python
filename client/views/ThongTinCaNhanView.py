@@ -1,6 +1,6 @@
 import tkinter as tk
 
-from client.models.GiaoVienModel import GiaoVienModel
+from models.GiaoVienModel import GiaoVienModel
 
 
 class ThongTinCaNhanView:

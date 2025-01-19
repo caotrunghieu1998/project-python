@@ -1,5 +1,5 @@
-from client.models.GiaoVienModel import GiaoVienModel
-from client.views.ThongTinCaNhanView import ThongTinCaNhanView
+from models.GiaoVienModel import GiaoVienModel
+from views.ThongTinCaNhanView import ThongTinCaNhanView
 
 class ThongTinCaNhanController:
     _instance = None

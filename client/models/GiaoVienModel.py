@@ -1,4 +1,4 @@
-from client.models.connectDB import ConnectDB
+from models.connectDB import ConnectDB
 
 
 class GiaoVien:

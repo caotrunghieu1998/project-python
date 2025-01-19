@@ -1,4 +1,4 @@
-from client.controllers.ThongTinCaNhanController import ThongTinCaNhanController
+from controllers.ThongTinCaNhanController import ThongTinCaNhanController
 
 
 class GiaoVienController:
