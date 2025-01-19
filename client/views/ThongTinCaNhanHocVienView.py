@@ -5,32 +5,28 @@ from datetime import datetime
 
 from common.common import Common
 
-class HocVienView:
+class ThongTinCaNhanHocVienView:
     _instance = None
 
     @classmethod
     def getInstance(cls):
-        if (HocVienView._instance):
-            return HocVienView._instance
-        HocVienView._instance = HocVienView()
+        if (ThongTinCaNhanHocVienView._instance):
+            return ThongTinCaNhanHocVienView._instance
+        ThongTinCaNhanHocVienView._instance = ThongTinCaNhanHocVienView()
         
-        return HocVienView._instance
+        return ThongTinCaNhanHocVienView._instance
 
-    def __init__(self, root: Tk):
+    def __init__(self, root: Tk, hoc_vien):
         self._root = root
-        self._tree = ttk.Treeview(None)
+        self._hoc_vien = hoc_vien
         self._common = Common()
-        self._common.center_window(root)
+        self._common.center_window(root, 400, 400)
         self.initView()
-        
-    @property
-    def tree(self):
-        return self._tree
     
     def initView(self):
         root = self._root
 
-        root.title("Danh sách học viên")
+        root.title("Thông tin học viên")
         self.top_frame = Frame(root, padx=10, pady=10)
         self.top_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
@@ -40,15 +36,13 @@ class HocVienView:
         self.top_frame.grid_columnconfigure(2, weight=2)
         self.top_frame.grid_columnconfigure(3, weight=3)
         self.top_frame.grid_columnconfigure(4, weight=4)
-        self.top_frame.grid_columnconfigure(5, weight=5)
         
         self.header()
-        self.body()
 
     def header(self):
         """Tạo các ô nhập liệu."""
         # Tiêu đề
-        self.labelTitle = Label(self.top_frame, text="Danh sách học viên", font=("Arial", 20, "bold"))
+        self.labelTitle = Label(self.top_frame, text="Thông tin học viên", font=("Arial", 20, "bold"))
         self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)
 
         # Mã học viên
@@ -59,13 +53,13 @@ class HocVienView:
         self.ma_hv.grid(row=1, column=1, padx=10, pady=5)
 
         # Họ tên học viên
-        self.label_ho_hv = Label(self.top_frame, text="Họ: ", font=("Arial", 10, "bold"))
+        self.label_ho_hv = Label(self.top_frame, text="Họ tên: ", font=("Arial", 10, "bold"))
         self.label_ho_hv.grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.entry_ho_hv_text = StringVar()
         self.ho_hv = Entry(self.top_frame, textvariable=self.entry_ho_hv_text, width=40, font=("Arial", 10))
         self.ho_hv.grid(row=2, column=1, padx=10, pady=5)
         
-        self.label_ho_hv = Label(self.top_frame, text="Tên: ", font=("Arial", 10, "bold"))
+        self.label_ho_hv = Label(self.top_frame, text="Họ tên: ", font=("Arial", 10, "bold"))
         self.label_ho_hv.grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.entry_ten_hv_text = StringVar()
         self.ten_hv = Entry(self.top_frame, textvariable=self.entry_ten_hv_text, width=40, font=("Arial", 10))
@@ -105,49 +99,8 @@ class HocVienView:
         self.buttonRefresh = Button(self.button_frame, text="Làm mới", font=("Arial", 10), width=12, relief="raised", bd=2)
         self.buttonRefresh.grid(row=0, column=0, padx=10)
 
-        self.buttonAdd = Button(self.button_frame, text="Thêm", font=("Arial", 10), width=12, relief="raised", bd=2)
-        self.buttonAdd.grid(row=0, column=1, padx=10)
-
         self.buttonEdit = Button(self.button_frame, text="Cập nhật", font=("Arial", 10), width=12, relief="raised", bd=2)
-        self.buttonEdit.grid(row=0, column=2, padx=10)
-
-        self.buttonRemove = Button(self.button_frame, text="Xoá", font=("Arial", 10), width=12, relief="raised", bd=2)
-        self.buttonRemove.grid(row=0, column=3, padx=10)
-
-    def body(self):
-        """Tạo bảng Treeview."""
-        self._tree = ttk.Treeview(
-            self._root, columns=("MAHV", "HO", "TEN", "NGSINH", "GIOITINH", "NOISINH", "MALOP"), show="headings"
-        )
-        self._tree.pack(fill="both", expand=True, padx=10, pady=10)
-
-        self._tree.heading("MAHV", text="Mã Học Viên")
-        self._tree.heading("HO", text="Họ Học Viên")
-        self._tree.heading("TEN", text="Tên Học Viên")
-        self._tree.heading("NGSINH", text="Ngày sinh")
-        self._tree.heading("GIOITINH", text="Giới tính")
-        self._tree.heading("NOISINH", text="Nơi sinh")
-        self._tree.heading("MALOP", text="Mã lớp")
-
-        self._tree.column("MAHV", width=20, anchor="center")
-        self._tree.column("HO", width=20, anchor="w")
-        self._tree.column("TEN", width=20, anchor="w")
-        self._tree.column("NGSINH", width=20, anchor="center")
-        self._tree.column("GIOITINH", width=20, anchor="center")
-        self._tree.column("NOISINH", width=40, anchor="w")
-        self._tree.column("MALOP", width=20, anchor="center")
-
-    #get
-    def get_selected_item(self):
-        """Trả về Mã Học Viên của item được chọn."""
-        selected_items = self._tree.selection()
-        
-        if selected_items:  
-            first_item = selected_items[0]  
-            values = self._tree.item(first_item, "values")  
-            return values
-        else:
-            return None
+        self.buttonEdit.grid(row=0, column=1, padx=10)
 
     def get_input_values(self):
         """Lấy dữ liệu từ các ô nhập liệu."""
@@ -160,6 +113,16 @@ class HocVienView:
             "NOISINH": self.get_noisinh(),
             "MALOP": self.get_ma_lop()
         }
+
+    def set_input_values(self, item):
+        """Lấy dữ liệu từ DB vào các ô nhập liệu."""
+        self.set_ma_hv(item[0])
+        self.set_ho_hv(item[1])
+        self.set_ten_hv(item[2])
+        self.set_ngsinh_hv(item[3])
+        self.set_gioitinh(item[4])
+        self.set_noisinh(item[5])
+        self.set_ma_lop(item[6])
         
     def get_ma_hv(self):
         return self.entry_ma_hv_text.get()
@@ -213,14 +176,6 @@ class HocVienView:
         self.gioitinh.delete(0, END)
         self.noisinh.delete(0, END)
         self.ma_lop.delete(0, END)
-        
-    def load_list(self, data):
-        """Cập nhật Treeview với dữ liệu."""
-        for item in self._tree.get_children():
-            self._tree.delete(item)
-
-        for item in data:
-            self._tree.insert("", END, values=(item["MAHV"], item["HO"], item["TEN"], item["NGSINH"], item["GIOITINH"], item["NOISINH"], item["MALOP"]))
         
     def showView(self):
         self._root.mainloop()

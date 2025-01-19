@@ -48,9 +48,9 @@ class GiaoVienController:
     def load_data(self):
         """Hiển thị danh sách"""
 
-    def goToProfileScreen(self, maGV):
-        gv = self._model.login(maGV)
-        ThongTinCaNhanController.getInstance().loadData(gv[0]["MAGV"])
+    def goToProfileScreen(self, ma):
+        data = self._model.login(ma)
+        ThongTinCaNhanController.getInstance().loadData(data[0]["MAGV"], 'GIAOVIEN')
 
     def goToDangXuatScreen(self):
         pass

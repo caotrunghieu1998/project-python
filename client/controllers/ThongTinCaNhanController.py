@@ -1,4 +1,5 @@
 from models.GiaoVienModel import GiaoVienModel
+from models.HocVienModel import HocVienModel
 from views.ThongTinCaNhanView import ThongTinCaNhanView
 
 class ThongTinCaNhanController:
@@ -14,10 +15,15 @@ class ThongTinCaNhanController:
     def __init__(self):
         self.thongTinCaNhanView = ThongTinCaNhanView.getInstance()
         self.giaoVienModel = GiaoVienModel()
+        self.hocVienModel = HocVienModel()
 
-    def loadData(self, MAGV):
-        data = self.giaoVienModel.login(MAGV)
-        self.thongTinCaNhanView.loadData(data)
+    def loadData(self, ma, type):
+        if type == 'HOCVIEN':
+            data = self.hocVienModel.login(ma)
+            self.thongTinCaNhanView.loadData(data)
+        elif type == 'GIAOVIEN':
+            data = self.giaoVienModel.login(ma)
+            self.thongTinCaNhanView.loadData(data)
 
     def show(self):
         self.thongTinCaNhanView.root.mainloop()

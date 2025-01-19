@@ -14,11 +14,12 @@ class HocVienLoginView:
 
     def __init__(self, root: Tk, hoc_vien):
         self.tkRoot = root
+        self._hoc_vien = hoc_vien
         self._common = Common()
         self._common.center_window(self.tkRoot, 610, 300)
-        self.initView(hoc_vien)
+        self.initView()
 
-    def initView(self, hoc_vien):
+    def initView(self):
         root = self.tkRoot
 
         root.title("Chức năng học viên")
@@ -26,7 +27,7 @@ class HocVienLoginView:
         self.top_frame.pack(padx=10, pady=10, fill="both", expand=True)
 
         # Header
-        self.labelTitle = Label(self.top_frame, text="Xin chào học viên {0} {1}".format(hoc_vien[0]["HO"], hoc_vien[0]["TEN"]), font=("Arial", 20, "bold"))
+        self.labelTitle = Label(self.top_frame, text="Xin chào học viên {0} {1}".format(self._hoc_vien[0]["HO"], self._hoc_vien[0]["TEN"]), font=("Arial", 20, "bold"))
         self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)
         
         # Tạo button_frame

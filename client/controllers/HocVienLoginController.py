@@ -15,9 +15,9 @@ from controllers.KhoaController import KhoaController
 from models.KhoaModel import KhoaModel
 from views.KhoaView import KhoaView
 
-from controllers.GiangDayController import GiangDayController
-from models.GiangDayModel import GiangDayModel
-from views.GiangDayView import GiangDayView
+from controllers.ThongTinCaNhanHocVienController import ThongTinCaNhanHocVienController
+from models.ThongTinCaNhanHocVienModel import ThongTinCaNhanHocVienModel
+from views.ThongTinCaNhanHocVienView import ThongTinCaNhanHocVienView
 
 
 class HocVienLoginController:
@@ -47,9 +47,14 @@ class HocVienLoginController:
     def load_data(self):
         """Hiển thị danh sách"""
 
-    def goToProfileScreen(self, maGV):
-        gv = self._model.login(maGV)
-        ThongTinCaNhanController.getInstance().loadData(gv[0]["MAHV"])
+    def goToProfileScreen(self):
+        data = self._model.login(self._view._hoc_vien[0]["MAHV"])
+        print('dadawd', data)
+        root = Tk()
+        m = ThongTinCaNhanHocVienModel()
+        v = ThongTinCaNhanHocVienView(root, data)
+        c = ThongTinCaNhanHocVienController(m, v)
+        v.showView()
 
     def goToDangXuatScreen(self):
         pass
