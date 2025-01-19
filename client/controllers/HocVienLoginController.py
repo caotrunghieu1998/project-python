@@ -46,8 +46,8 @@ class HocVienLoginController:
         """Hiển thị danh sách"""
 
     def goToProfileScreen(self):
+        self._view.tkRoot.destroy()
         data = self._model.login(self._view._hoc_vien[0]["MAHV"])
-        print('dadawd', data)
         root = Tk()
         m = ThongTinCaNhanHocVienModel()
         v = ThongTinCaNhanHocVienView(root, data)

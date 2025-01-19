@@ -45,9 +45,10 @@ class ThongTinCaNhanGiaoVienModel(ConnectDB):
         cursor.execute(query, (ma))
         data = cursor.fetchall()
         self.close()
+        
         return self.convert(data)
     
-    def get_data_by_ma_gv(self, item):
+    def load_item(self, item):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
         cursor = db.cursor()
@@ -77,23 +78,17 @@ class ThongTinCaNhanGiaoVienModel(ConnectDB):
         """Thêm dữ liệu mới vào CSDL."""
         db = self.connect()
         cursor = db.cursor()
-        
         try:
-            item_old = self.get_data_by_ma_gv(item)
-            is_same = self.check_same(item, item_old)
-            if is_same == False:
-                query = """
-                        UPDATE {0}
-                        SET MAGV = %s, HOTEN = %s, HOCVI = %s, HOCHAM = %s, GIOITINH = %s, NGSINH = %s, NGVL = %s, HESO = %s, MUCLUONG = %s, MAKHOA = %s
-                        WHERE MAGV = %s
-                        """.format(self.NAME_TABLE_GIAOVIEN)
+            query = """
+                    UPDATE {0}
+                    SET HOTEN = %s, HOCVI = %s, HOCHAM = %s, GIOITINH = %s, NGSINH = %s, NGVL = %s, HESO = %s, MUCLUONG = %s, MAKHOA = %s
+                    WHERE MAGV = %s
+                    """.format(self.NAME_TABLE_GIAOVIEN)
 
-                cursor.execute(query, (item["HOTEN"], item["HOCVI"], item["HOCHAM"], item["GIOITINH"], item["NGSINH"], item["NGVL"], item["HESO"], item["MUCLUONG"], item["MAKHOA"], item["MAGV"]))
-                db.commit()
-                
-                return "UPDATED"
-            else:
-                return "NONE"
+            cursor.execute(query, (item["HOTEN"], item["HOCVI"], item["HOCHAM"], item["GIOITINH"], item["NGSINH"], item["NGVL"], item["HESO"], item["MUCLUONG"], item["MAKHOA"], item["MAGV"]))
+            db.commit()
+            
+            return "UPDATED"
         except Exception as e:
             db.rollback()
             print(f"Lỗi khi cập nhật dữ liệu: {e}")

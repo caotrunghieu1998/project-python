@@ -30,7 +30,7 @@ class ThongTinCaNhanGiaoVienController:
             
     def load_data(self):
         """Hiển thị danh sách"""
-        data = self._model.get_data_by_ma_gv(self._view.giao_vien_param)
+        data = self._model.load_item(self._view.giao_vien_param)
         self._view.set_input_values(data)
         self._view.buttonRefresh.config(state="normal")
         self._view.buttonEdit.config(state="disabled")

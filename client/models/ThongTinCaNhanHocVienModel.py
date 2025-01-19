@@ -38,18 +38,7 @@ class ThongTinCaNhanHocVienModel(ConnectDB):
         self.close()
         return self.convert(data)
     
-    def get_list_data(self):
-        """Trả về danh sách dữ liệu."""
-        db = self.connect()
-        cursor = db.cursor()
-        query = "SELECT * FROM {0} ORDER BY MAHV ASC".format(self.NAME_TABLE_HOCVIEN)
-        cursor.execute(query)
-        data = cursor.fetchall()
-        self.close()
-        
-        return self.convert(data)
-    
-    def get_data_by_ma_gv(self, item):
+    def load_item(self, item):
         """Trả về danh sách dữ liệu."""
         db = self.connect()
         cursor = db.cursor()
@@ -97,21 +86,16 @@ class ThongTinCaNhanHocVienModel(ConnectDB):
         cursor = db.cursor()
         
         try:
-            item_old = self.get_data_by_ma_hv(item)
-            is_same = self.check_same(item, item_old)
-            if is_same == False:
-                query = """
-                        UPDATE {0}
-                        SET HO = %s, TEN = %s, NGSINH = %s, GIOITINH = %s, NOISINH = %s, MALOP = %s
-                        WHERE MAHV = %s
-                        """.format(self.NAME_TABLE_HOCVIEN)
+            query = """
+                    UPDATE {0}
+                    SET HO = %s, TEN = %s, NGSINH = %s, GIOITINH = %s, NOISINH = %s, MALOP = %s
+                    WHERE MAHV = %s
+                    """.format(self.NAME_TABLE_HOCVIEN)
 
-                cursor.execute(query, (item["HO"], item["TEN"], item["NGSINH"], item["GIOITINH"], item["NOISINH"], item["MALOP"], item["MAHV"]))
-                db.commit()
-                
-                return "UPDATED"
-            else:
-                return "NONE"
+            cursor.execute(query, (item["HO"], item["TEN"], item["NGSINH"], item["GIOITINH"], item["NOISINH"], item["MALOP"], item["MAHV"]))
+            db.commit()
+            
+            return "UPDATED"
         except Exception as e:
             db.rollback()
             print(f"Lỗi khi cập nhật dữ liệu: {e}")

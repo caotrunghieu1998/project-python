@@ -20,7 +20,7 @@ class ThongTinCaNhanGiaoVienView:
         self._root = root
         self._giao_vien = giao_vien
         self._common = Common()
-        self._common.center_window(root, 400, 400)
+        self._common.center_window(root, 500, 500)
         self.initView()
     
     
@@ -144,7 +144,6 @@ class ThongTinCaNhanGiaoVienView:
         }
 
     def set_input_values(self, item):
-        print('itemitemitem', item)
         """Lấy dữ liệu từ DB vào các ô nhập liệu."""
         self.set_ma_gv(str(item["MAGV"]))
         self.set_ho_ten(str(item["HOTEN"]))

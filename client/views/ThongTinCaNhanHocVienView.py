@@ -20,7 +20,7 @@ class ThongTinCaNhanHocVienView:
         self._root = root
         self._hoc_vien = hoc_vien
         self._common = Common()
-        self._common.center_window(root, 400, 400)
+        self._common.center_window(root, 500, 350)
         self.initView()
     
     @property

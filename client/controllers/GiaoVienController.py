@@ -51,8 +51,8 @@ class GiaoVienController:
         """Hiển thị danh sách"""
 
     def goToProfileScreen(self):
+        self._view.tkRoot.destroy()
         data = self._model.login(self._view._giao_vien[0]["MAGV"])
-        print('dadawd', data)
         root = Tk()
         m = ThongTinCaNhanGiaoVienModel()
         v = ThongTinCaNhanGiaoVienView(root, data)
