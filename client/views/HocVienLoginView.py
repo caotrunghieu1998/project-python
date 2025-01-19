@@ -60,3 +60,8 @@ class HocVienLoginView:
 
     def showView(self):
         self.tkRoot.mainloop()
+
+    def reuse(self):
+        self.tkRoot = Tk()
+        self._common.center_window(self.tkRoot, 610, 300)
+        self.initView()

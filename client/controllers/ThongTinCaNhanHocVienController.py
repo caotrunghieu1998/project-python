@@ -57,3 +57,11 @@ class ThongTinCaNhanHocVienController:
         else:
             messagebox.showerror("Thông báo", "Lôi thao tác")
         self.load_data()
+
+    def initCommandButtonBack(self, commandBack):
+         if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back

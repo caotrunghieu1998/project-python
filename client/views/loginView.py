@@ -46,7 +46,7 @@ class LoginView:
         # Tên đăng nhập
         self.label_inputEmail = Label(self.top_frame, text="Tên đăng nhập *: ", font=("Arial", 10, "bold"))
         self.label_inputEmail.grid(row=1, column=0, padx=10, pady=5, sticky="e")
-        self.entry_inputEmail_text = StringVar(value="GV07")
+        self.entry_inputEmail_text = StringVar(value="K1101")
         self.inputEmail = Entry(self.top_frame, textvariable=self.entry_inputEmail_text, width=40, font=("Arial", 10))
         self.inputEmail.grid(row=1, column=1, padx=10, pady=5)
 
@@ -111,6 +111,8 @@ class LoginView:
                 m = HocVienLoginModel()
                 v = HocVienLoginView(root, user)
                 c = HocVienLoginController(m, v)
+                c.initCommandButtonDangXuat(self.back)
+                c.initItemView()
                 v.showView()
             else:
                 messagebox.showerror("Thất bại", "Tài khoản hoặc mật khẩu học viên không chính xác")

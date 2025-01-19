@@ -36,13 +36,20 @@ class HocVienLoginController:
     def __init__(self, model: HocVienLoginModel, view: HocVienLoginView):
         self._model = model
         self._view = view
+        
+    def initItemView(self):
         self._view.btnProfile["command"] = self.goToProfileScreen
-        self._view.btnDangXuat["command"] = self.goToDangXuatScreen
         self._view.btnKhoa["command"] = self.goToKhoaScreen
         self._view.btnHocVien["command"] = self.goToHocVienScreen
         self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
         self._view.btnKQThi["command"] = self.goToKetQuaThiScreen
+        if self.commandBack:
+            def _back():
+                self._view.tkRoot.destroy()
+                self.commandBack()
+
+            self._view.btnDangXuat["command"] = _back
         
         self._data = self._model.get_data_by_id(self._view._hoc_vien[0]["MAHV"])
         self.load_data()
@@ -56,10 +63,8 @@ class HocVienLoginController:
         m = ThongTinCaNhanHocVienModel()
         v = ThongTinCaNhanHocVienView(root, self._data)
         c = ThongTinCaNhanHocVienController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
-
-    def goToDangXuatScreen(self):
-        pass
 
     def goToKhoaScreen(self):
         self._view.tkRoot.destroy()
@@ -67,6 +72,7 @@ class HocVienLoginController:
         m = KhoaModel()
         v = KhoaView(root)
         c = KhoaController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToHocVienScreen(self):
@@ -75,6 +81,7 @@ class HocVienLoginController:
         m = HocVienModel()
         v = HocVienView(root)
         c = HocVienController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToMonHocScreen(self):
@@ -87,6 +94,7 @@ class HocVienLoginController:
         m = LopModel()
         v = LopView(root)
         c = LopController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
 
     def goToKetQuaThiScreen(self):
@@ -95,4 +103,13 @@ class HocVienLoginController:
         m = KetQuaThiModel()
         v = KetQuaThiView(root, self._data, "HOCVIEN")
         c = KetQuaThiController(m, v)
+        c.initCommandButtonBack(self.back)
         v.showView()
+
+    def initCommandButtonDangXuat(self, commandBack):
+         self.commandBack = commandBack
+
+    def back(self):
+        self._view.reuse()
+        self.initItemView()
+        self._view.showView()

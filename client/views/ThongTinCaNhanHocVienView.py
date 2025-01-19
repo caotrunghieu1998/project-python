@@ -106,6 +106,10 @@ class ThongTinCaNhanHocVienView:
         self.buttonEdit = Button(self.button_frame, text="Cập nhật", font=("Arial", 10), width=12, relief="raised", bd=2)
         self.buttonEdit.grid(row=0, column=1, padx=10)
 
+        self.buttonBack = Button(self.button_frame, text="Trở về", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonBack.grid(row=0, column=2, padx=10)
+
+
     def get_input_values(self):
         """Lấy dữ liệu từ các ô nhập liệu."""
         return {

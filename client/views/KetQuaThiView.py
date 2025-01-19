@@ -65,6 +65,7 @@ class KetQuaThiView:
         else:
             self.labelTitle = Label(self.top_frame, text="Danh sách kết quả thi của học viên {0} {1}".format(self.data_param[0]["HO"], self.data_param[0]["TEN"]), font=("Arial", 20, "bold"))
             self.labelTitle.grid(row=0, column=0, columnspan=2, pady=10)  
+            self.headerOnlyBack()
               
         self.body()
 
@@ -129,6 +130,13 @@ class KetQuaThiView:
 
         self.buttonBack = Button(self.button_frame, text="Trở về", font=("Arial", 10), width=12, relief="raised", bd=2)
         self.buttonBack.grid(row=0, column=4, padx=10)
+
+    def headerOnlyBack(self):
+        # Các nút chức năng
+        self.button_frame = Frame(self.top_frame)
+        self.button_frame.grid(row=7, column=0, columnspan=2, pady=20)
+        self.buttonBack = Button(self.button_frame, text="Trở về", font=("Arial", 10), width=12, relief="raised", bd=2)
+        self.buttonBack.grid(row=0, column=0, padx=10)
 
     def body(self):
         """Tạo bảng Treeview."""
