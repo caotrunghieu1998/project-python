@@ -25,9 +25,18 @@ class HocVienModel(ConnectDB):
     def convert_obj(self, row):
         data_convert = {"MAHV": row[0], "HO": row[1], "TEN": row[2], "NGSINH": row[3], "GIOITINH": row[4], "NOISINH": row[5], "MALOP": row[6]}
         return data_convert
-    
+        
     def convert(self, data):
         return [self.convert_obj(row) for row in data]
+    
+    def login(self, ma):
+        db = self.connect()
+        cursor = db.cursor()
+        query = "SELECT * FROM {0} WHERE MAHV = %s".format(self.NAME_TABLE_HOCVIEN)
+        cursor.execute(query, (ma))
+        data = cursor.fetchall()
+        self.close()
+        return self.convert(data)
     
     def get_list_data(self):
         """Trả về danh sách dữ liệu."""

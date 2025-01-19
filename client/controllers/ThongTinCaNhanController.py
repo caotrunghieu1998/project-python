@@ -16,7 +16,7 @@ class ThongTinCaNhanController:
         self.giaoVienModel = GiaoVienModel()
 
     def loadData(self, MAGV):
-        data = self.giaoVienModel.getData(MAGV)
+        data = self.giaoVienModel.login(MAGV)
         self.thongTinCaNhanView.loadData(data)
 
     def show(self):

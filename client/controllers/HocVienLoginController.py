@@ -1,6 +1,6 @@
 from controllers.ThongTinCaNhanController import ThongTinCaNhanController
-from models.GiaoVienModel import GiaoVienModel
-from views.GiaoVienView import GiaoVienView
+from models.HocVienLoginModel import HocVienLoginModel
+from views.HocVienLoginView import HocVienLoginView
 
 from tkinter import *
 from controllers.LopController import LopController
@@ -20,25 +20,24 @@ from models.GiangDayModel import GiangDayModel
 from views.GiangDayView import GiangDayView
 
 
-class GiaoVienController:
+class HocVienLoginController:
     _instance = None
     giaoVien = None
 
     @classmethod
     def getInstance(cls):
-        if (GiaoVienController._instance):
-            return GiaoVienController._instance
-        GiaoVienController._instance = GiaoVienController()
-        return GiaoVienController._instance
+        if (HocVienLoginController._instance):
+            return HocVienLoginController._instance
+        HocVienLoginController._instance = HocVienLoginController()
+        return HocVienLoginController._instance
 
-    def __init__(self, model: GiaoVienModel, view: GiaoVienView):
+    def __init__(self, model: HocVienLoginModel, view: HocVienLoginView):
         self._model = model
         self._view = view
         self._view.btnProfile["command"] = self.goToProfileScreen
         self._view.btnDangXuat["command"] = self.goToDangXuatScreen
         self._view.btnKhoa["command"] = self.goToKhoaScreen
         self._view.btnHocVien["command"] = self.goToHocVienScreen
-        self._view.btnGiangDay["command"] = self.goToGiangDayScreen
         self._view.btnMonHoc["command"] = self.goToMonHocScreen
         self._view.btnLop["command"] = self.goToLopScreen
         self._view.btnDiem["command"] = self.goToDiemScreen
@@ -50,7 +49,7 @@ class GiaoVienController:
 
     def goToProfileScreen(self, maGV):
         gv = self._model.login(maGV)
-        ThongTinCaNhanController.getInstance().loadData(gv[0]["MAGV"])
+        ThongTinCaNhanController.getInstance().loadData(gv[0]["MAHV"])
 
     def goToDangXuatScreen(self):
         pass
@@ -67,13 +66,6 @@ class GiaoVienController:
         m = HocVienModel()
         v = HocVienView(root)
         c = HocVienController(m, v)
-        v.showView()
-
-    def goToGiangDayScreen(self):
-        root = Tk()
-        m = GiangDayModel()
-        v = GiangDayView(root)
-        c = GiangDayController(m, v)
         v.showView()
 
     def goToMonHocScreen(self):

@@ -40,7 +40,7 @@ class GiaoVienModel(ConnectDB):
                  "MAKHOA": row[9]
                  } for row in data]
 
-    def getData(self, maGV):
+    def login(self, maGV):
         db = self.connect()
         cursor = db.cursor()
         query = "SELECT * FROM {0} WHERE maGV = %s".format(self.NAME_TABLE_GIAOVIEN)
