@@ -9,11 +9,15 @@ from views.lopView import LopView
 
 from controllers.HocVienController import HocVienController
 from models.HocVienModel import HocVienModel
-from client.views.HocVienView import HocVienView
+from views.HocVienView import HocVienView
 
 from controllers.KhoaController import KhoaController
 from models.KhoaModel import KhoaModel
 from views.KhoaView import KhoaView
+
+from controllers.GiangDayController import GiangDayController
+from models.GiangDayModel import GiangDayModel
+from views.GiangDayView import GiangDayView
 
 
 class GiaoVienController:
@@ -66,7 +70,11 @@ class GiaoVienController:
         v.showView()
 
     def goToGiangDayScreen(self):
-        pass
+        root = Tk()
+        m = GiangDayModel()
+        v = GiangDayView(root)
+        c = GiangDayController(m, v)
+        v.showView()
 
     def goToMonHocScreen(self):
         pass

@@ -1,27 +1,26 @@
 from tkinter import messagebox
-from models.HocVienModel import HocVienModel
-from views.HocVienView import HocVienView
+from models.GiangDayModel import GiangDayModel
+from views.GiangDayView import GiangDayView
 
-class HocVienController:
+class GiangDayController:
     _instance = None
 
     @classmethod
     def getInstance(cls):
-        if (HocVienController._instance):
-            return HocVienController._instance
-        HocVienController._instance = HocVienController()
-        return HocVienController._instance
+        if (GiangDayController._instance):
+            return GiangDayController._instance
+        GiangDayController._instance = GiangDayController()
+        return GiangDayController._instance
 
-    def __init__(self, model: HocVienModel, view: HocVienView):
+    def __init__(self, model: GiangDayModel, view: GiangDayView):
         self._model = model
         self._view = view
         self._tree = self._view.tree
-        self._view.ma_hv.bind('<KeyRelease>', self.ma_hv_text_change)
-        self._view.ho_hv.bind('<KeyRelease>', self.field_text_change)
-        self._view.ten_hv.bind('<KeyRelease>', self.field_text_change)
-        self._view.gioitinh.bind('<KeyRelease>', self.field_text_change)
-        self._view.noisinh.bind('<KeyRelease>', self.field_text_change)
-        self._view.ma_lop.bind('<KeyRelease>', self.field_text_change)
+        self._view.ma_lop.bind('<KeyRelease>', self.ma_key_text_change)
+        self._view.ma_mh.bind('<KeyRelease>', self.ma_key_text_change)
+        self._view.ma_gv.bind('<KeyRelease>', self.ma_key_text_change)
+        self._view.hoc_ky.bind('<KeyRelease>', self.field_text_change)
+        self._view.nam.bind('<KeyRelease>', self.field_text_change)
         self._view.buttonRefresh["command"] = self.btn_refresh
         self._view.buttonAdd["command"] = self.add_item
         self._view.buttonEdit["command"] = self.update_item
@@ -37,7 +36,7 @@ class HocVienController:
         self._view.buttonEdit.config(state="disabled")
         self._view.buttonRemove.config(state="disabled")
 
-    def ma_hv_text_change(self, event=None):
+    def ma_key_text_change(self, event=None):
         self._view.buttonRefresh.config(state="normal")
         self._view.buttonAdd.config(state="normal")
         self._view.buttonEdit.config(state="disabled")
@@ -62,8 +61,10 @@ class HocVienController:
             messagebox.showerror("Lỗi", "Vui lòng nhập đầy đủ thông tin.")
             return
 
-        ma_hv = item["MAHV"]
-        is_exist = self._model.is_ma_hv_exist(ma_hv)
+        ma_lop = item["MALOP"]
+        ma_mh = item["MAMH"]
+        ma_gv = item["MAGV"]
+        is_exist = self._model.is_ma_exist(ma_lop, ma_mh, ma_gv)
         if is_exist == True:
             messagebox.showwarning("Cảnh báo", "Mã đã tồn tại")
             return
@@ -74,8 +75,8 @@ class HocVienController:
 
     def update_item(self):
         """Chỉnh sửa dữ liệu"""
-        ma_hv = self._view.get_selected_item()
-        if ma_hv is None:
+        ma = self._view.get_selected_item()
+        if ma is None:
             messagebox.showerror("Lỗi", "Vui lòng chọn một dòng để sửa.")
             return
 
@@ -92,9 +93,9 @@ class HocVienController:
         
     def delete_item(self):
         """Xoá dữ liệu đã chọn"""
-        ma_hv = self._view.get_selected_item()
+        ma = self._view.get_selected_item()
         
-        if ma_hv is None:
+        if ma is None:
             messagebox.showerror("Lỗi", "Vui lòng chọn một dòng để xóa.")
             return
 
@@ -115,18 +116,18 @@ class HocVienController:
         self._view.clear_inputs()
         hv = self._view.get_selected_item()
         if hv != None:
-            ma_hv = hv[0]
-            ho_hv = hv[1]
-            ten_hv = hv[2]
-            ngsinh_hv = hv[3]
-            gioitinh = hv[4]
-            noisinh = hv[5]
-            ma_lop = hv[6]
+            ma_lop = hv[0]
+            ma_mh = hv[1]
+            ma_gv = hv[2]
+            hoc_ky = hv[3]
+            nam = hv[4]
+            tu_ngay = hv[5]
+            den_ngay = hv[6]
             
-            self._view.set_ma_hv(ma_hv)
-            self._view.set_ho_hv(ho_hv)
-            self._view.set_ten_hv(ten_hv)
-            self._view.set_ngsinh_hv(ngsinh_hv)
-            self._view.set_gioitinh(gioitinh)
-            self._view.set_noisinh(noisinh)
             self._view.set_ma_lop(ma_lop)
+            self._view.set_ma_mh(ma_mh)
+            self._view.set_ma_gv(ma_gv)
+            self._view.set_hoc_ky(hoc_ky)
+            self._view.set_nam(nam)
+            self._view.set_tu_ngay(tu_ngay)
+            self._view.set_den_ngay(den_ngay)
