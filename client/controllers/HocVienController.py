@@ -1,6 +1,6 @@
 from tkinter import messagebox
 from models.HocVienModel import HocVienModel
-from client.views.HocVienView2 import HocVienView
+from client.views.HocVienView import HocVienView
 
 class HocVienController:
     _instance = None

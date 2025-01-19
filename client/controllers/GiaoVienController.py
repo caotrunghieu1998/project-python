@@ -9,7 +9,7 @@ from views.lopView import LopView
 
 from controllers.HocVienController import HocVienController
 from models.HocVienModel import HocVienModel
-from client.views.HocVienView2 import HocVienView
+from client.views.HocVienView import HocVienView
 
 from controllers.KhoaController import KhoaController
 from models.KhoaModel import KhoaModel
