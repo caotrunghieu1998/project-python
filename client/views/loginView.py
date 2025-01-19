@@ -1,10 +1,11 @@
 from tkinter import *
 from tkinter import messagebox
 from controllers.userController import UserController
-from views.hocVienView import HocVienView
+
+from controllers.GiaoVienController import GiaoVienController
+from models.GiaoVienModel import GiaoVienModel
 from views.GiaoVienView import GiaoVienView
 
-from client.models.GiaoVienModel import GiaoVienModel
 
 
 class LoginView:
@@ -57,11 +58,13 @@ class LoginView:
         else:
             user = GiaoVienModel.getInstance().getData(email)
             if (user):
-                print(user[0]["MAGV"])
                 messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
-                giaoVienView = GiaoVienView.getInstance()
-                giaoVienView.initView(user)
-                giaoVienView.showView()
+                
+                root = Tk()
+                m = GiaoVienModel()
+                v = GiaoVienView(root)
+                c = GiaoVienController(m, v)
+                v.showView()
             else:
                 messagebox.showerror("Thất bại", "Sai thông tin đăng")

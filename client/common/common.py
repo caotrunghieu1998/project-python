@@ -1,21 +1,13 @@
-from views.hocVienView import HocVienView
 from tkinter import *
 
 class Common:
-    @staticmethod
-    def goToHocVienView(currentScreenRoot, user):
-        currentScreenRoot.destroy()
-        hocVienView = HocVienView.getInstance(user)
-        hocVienView.initView()
-        hocVienView.showView()
-        
     def center_window(self, root: Tk):
         # Lấy kích thước màn hình
         screen_width = root.winfo_screenwidth()
         screen_height = root.winfo_screenheight()
 
         # Lấy kích thước cửa sổ
-        window_width = 550
+        window_width = 800
         window_height = 600
 
         # Tính toán vị trí để căn giữa
