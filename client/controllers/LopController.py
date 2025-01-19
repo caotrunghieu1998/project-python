@@ -28,6 +28,14 @@ class LopController:
         self._view.tree.bind('<<TreeviewSelect>>', self.get_selected_item)
         
         self.load_data()
+
+    def initCommandButtonBack(self, commandBack):
+         if commandBack:
+            def back():
+                self._view._root.destroy()
+                commandBack()
+
+            self._view.buttonBack["command"] = back
             
     def load_data(self):
         """Hiển thị danh sách lớp"""
