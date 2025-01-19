@@ -82,7 +82,7 @@ class LoginView:
         else:
             user = GiaoVienModel.getInstance().login(email, password)
             if (user):
-                messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
+                # messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAGV"]}\"")
                 self.tkRoot.destroy()
                 root = Tk()
                 m = GiaoVienModel()
@@ -103,7 +103,7 @@ class LoginView:
         else:
             user = HocVienLoginModel.getInstance().login(email, password)
             if (user):
-                messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAHV"]}\"")
+                # messagebox.showinfo("Thành công", f"Đăng nhập thành công, xin chào \"{user[0]["MAHV"]}\"")
                 self.tkRoot.destroy()
                 root = Tk()
                 m = HocVienLoginModel()

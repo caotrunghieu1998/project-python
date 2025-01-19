@@ -20,8 +20,12 @@ class ThongTinCaNhanHocVienView:
         self._root = root
         self._hoc_vien = hoc_vien
         self._common = Common()
-        self._common.center_window(root, 400, 400)
+        self._common.center_window(root, 500, 350)
         self.initView()
+    
+    @property
+    def hoc_vien_param(self):
+        return self._hoc_vien
     
     def initView(self):
         root = self._root
@@ -53,14 +57,14 @@ class ThongTinCaNhanHocVienView:
         self.ma_hv.grid(row=1, column=1, padx=10, pady=5)
 
         # Họ tên học viên
-        self.label_ho_hv = Label(self.top_frame, text="Họ tên: ", font=("Arial", 10, "bold"))
+        self.label_ho_hv = Label(self.top_frame, text="Họ: ", font=("Arial", 10, "bold"))
         self.label_ho_hv.grid(row=2, column=0, padx=10, pady=5, sticky="e")
         self.entry_ho_hv_text = StringVar()
         self.ho_hv = Entry(self.top_frame, textvariable=self.entry_ho_hv_text, width=40, font=("Arial", 10))
         self.ho_hv.grid(row=2, column=1, padx=10, pady=5)
         
-        self.label_ho_hv = Label(self.top_frame, text="Họ tên: ", font=("Arial", 10, "bold"))
-        self.label_ho_hv.grid(row=3, column=0, padx=10, pady=5, sticky="e")
+        self.label_ten_hv = Label(self.top_frame, text="Tên: ", font=("Arial", 10, "bold"))
+        self.label_ten_hv.grid(row=3, column=0, padx=10, pady=5, sticky="e")
         self.entry_ten_hv_text = StringVar()
         self.ten_hv = Entry(self.top_frame, textvariable=self.entry_ten_hv_text, width=40, font=("Arial", 10))
         self.ten_hv.grid(row=3, column=1, padx=10, pady=5)
@@ -116,13 +120,13 @@ class ThongTinCaNhanHocVienView:
 
     def set_input_values(self, item):
         """Lấy dữ liệu từ DB vào các ô nhập liệu."""
-        self.set_ma_hv(item[0])
-        self.set_ho_hv(item[1])
-        self.set_ten_hv(item[2])
-        self.set_ngsinh_hv(item[3])
-        self.set_gioitinh(item[4])
-        self.set_noisinh(item[5])
-        self.set_ma_lop(item[6])
+        self.set_ma_hv(str(item["MAHV"]))
+        self.set_ho_hv(str(item["HO"]))
+        self.set_ten_hv(str(item["TEN"]))
+        self.set_ngsinh_hv(str(item["NGSINH"]))
+        self.set_gioitinh(str(item["GIOITINH"]))
+        self.set_noisinh(str(item["NOISINH"]))
+        self.set_ma_lop(str(item["MALOP"]))
         
     def get_ma_hv(self):
         return self.entry_ma_hv_text.get()
